@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — Long Road To Maybe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:             #F6F4F1;
+    --text:           #2A2825;
+    --text-secondary: #6B6560;
+    --accent:         #9B8EA8;
+    --sage:           #7C9E8F;
+    --surface:        #EDE9E3;
+    --surface-deep:   #E2DDD6;
+    --dark:           #1E1C1A;
+    --dark-surface:   #2E2B28;
+    --white:          #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--text);
+    font-weight: 300; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; transition: color 0.25s; }
+  em { font-style: italic; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--bg); border-bottom: 1px solid var(--surface);
+    padding: 20px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 400;
+    letter-spacing: 0.02em; white-space: nowrap; cursor: pointer;
+  }
+  .wordmark em { color: var(--accent); font-weight: 300; }
+  .nav-links { display: flex; gap: 36px; font-size: 13px; letter-spacing: 0.06em; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  .nav-cta {
+    background: var(--text); color: var(--bg);
+    padding: 10px 24px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.1em; transition: background 0.25s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* ── PAGE HERO ── */
+  .page-hero {
+    padding: 80px 56px 64px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: end;
+    max-width: 1140px; margin: 0 auto;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 20px;
+  }
+  .eyebrow.sage   { color: var(--sage); }
+  .eyebrow.accent { color: var(--accent); }
+  .eyebrow.muted  { color: var(--text-secondary); }
+  .page-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 62px; font-weight: 300;
+    line-height: 1.08; letter-spacing: -0.01em;
+  }
+  .page-hero h1 em { color: var(--accent); }
+  .page-hero-right { padding-bottom: 8px; }
+  .page-hero-right p {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.85; margin-bottom: 28px;
+  }
+  .hero-stat-row { display: flex; gap: 36px; }
+  .hero-stat strong {
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300; color: var(--text);
+  }
+  .hero-stat span { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.06em; }
+
+  /* ── SEARCH BAR ── */
+  .search-wrap {
+    padding: 0 56px 48px;
+    max-width: 1140px; margin: 0 auto;
+  }
+  .search-bar {
+    display: flex; align-items: center;
+    border: 1px solid var(--surface-deep);
+    background: var(--white); max-width: 520px;
+    transition: border-color 0.25s;
+  }
+  .search-bar:focus-within { border-color: var(--accent); }
+  .search-icon {
+    padding: 0 16px; color: var(--text-secondary); font-size: 16px; user-select: none;
+  }
+  .search-bar input {
+    flex: 1; padding: 14px 16px 14px 0;
+    border: none; outline: none; background: transparent;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 300; color: var(--text);
+  }
+  .search-bar input::placeholder { color: var(--text-secondary); }
+  .search-clear {
+    padding: 0 16px; color: var(--text-secondary);
+    cursor: pointer; font-size: 18px; line-height: 1;
+    display: none; transition: color 0.2s;
+  }
+  .search-clear:hover { color: var(--text); }
+
+  .rule { height: 1px; background: var(--surface); margin: 0 56px; }
+
+  /* ── LAYOUT: SIDEBAR + MAIN ── */
+  .library-layout {
+    max-width: 1140px; margin: 0 auto;
+    padding: 56px 56px 88px;
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 64px; align-items: start;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar { position: sticky; top: 88px; }
+  .sidebar-section { margin-bottom: 40px; }
+  .sidebar-label {
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 500;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .sidebar-filters { display: flex; flex-direction: column; gap: 4px; }
+  .sidebar-btn {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 12px; background: transparent; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--text-secondary); cursor: pointer;
+    text-align: left; transition: all 0.2s; border-radius: 2px;
+  }
+  .sidebar-btn:hover { background: var(--surface); color: var(--text); }
+  .sidebar-btn.active {
+    background: var(--text); color: var(--bg); font-weight: 400;
+  }
+  .sidebar-btn .count {
+    font-size: 11px; opacity: 0.6;
+  }
+  .sidebar-btn.active .count { opacity: 0.7; }
+
+  .sidebar-divider { height: 1px; background: var(--surface); margin: 8px 0; }
+
+  /* ── MAIN CONTENT ── */
+  .main-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 36px;
+  }
+  .main-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300;
+  }
+  .main-header .result-count {
+    font-size: 12px; color: var(--text-secondary); letter-spacing: 0.06em;
+  }
+  .sort-select {
+    padding: 8px 14px; border: 1px solid var(--surface);
+    background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; color: var(--text-secondary); cursor: pointer;
+    outline: none; letter-spacing: 0.04em;
+  }
+
+  /* ── PINNED / FEATURED RESOURCE ── */
+  .pinned-resource {
+    background: var(--dark); padding: 36px 40px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: center; margin-bottom: 40px;
+    position: relative; overflow: hidden;
+  }
+  .pinned-resource::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: var(--accent);
+  }
+  .pinned-badge {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; color: var(--accent); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pinned-badge::before { content: '★'; font-size: 9px; }
+  .pinned-resource h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 300; color: #E8E0D5;
+    line-height: 1.25; margin-bottom: 10px;
+  }
+  .pinned-resource p { font-size: 13px; color: #7A7268; line-height: 1.7; }
+  .pinned-meta {
+    display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap;
+  }
+  .meta-pill {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; background: var(--dark-surface); color: #8A817A;
+  }
+  .btn-download-light {
+    background: var(--accent); color: var(--white);
+    padding: 13px 28px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.08em; white-space: nowrap;
+    transition: opacity 0.2s; display: flex; align-items: center; gap: 8px;
+  }
+  .btn-download-light:hover { opacity: 0.85; }
+
+  /* ── RESOURCE CARDS ── */
+  .resource-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .resource-card {
+    background: var(--white); border: 1px solid var(--surface);
+    padding: 28px; cursor: pointer; transition: all 0.25s;
+    display: flex; flex-direction: column;
+  }
+  .resource-card:hover {
+    border-color: var(--text-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(42,40,37,0.06);
+  }
+
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+  .resource-icon {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .resource-icon.sage-bg   { background: rgba(124,158,143,0.12); }
+  .resource-icon.accent-bg { background: rgba(155,142,168,0.12); }
+  .resource-icon.warm-bg   { background: rgba(42,40,37,0.06); }
+
+  .resource-type {
+    font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; font-weight: 500; padding: 4px 10px;
+  }
+  .type-guide    { color: var(--sage);   background: rgba(124,158,143,0.1); }
+  .type-template { color: var(--accent); background: rgba(155,142,168,0.1); }
+  .type-tracker  { color: var(--sage);   background: rgba(124,158,143,0.1); }
+  .type-checklist{ color: var(--accent); background: rgba(155,142,168,0.1); }
+  .type-explainer{ color: var(--text-secondary); background: rgba(42,40,37,0.06); }
+
+  .resource-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 400; line-height: 1.3;
+    margin-bottom: 10px; flex: 1;
+  }
+  .resource-card p {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.75; margin-bottom: 20px; flex: 1;
+  }
+  .card-footer {
+    display: flex; justify-content: space-between;
+    align-items: center; padding-top: 18px;
+    border-top: 1px solid var(--surface); margin-top: auto;
+  }
+  .card-footer-meta { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.04em; }
+  .btn-download {
+    background: var(--text); color: var(--bg);
+    padding: 9px 18px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    letter-spacing: 0.08em; display: flex; align-items: center; gap: 6px;
+    transition: background 0.2s; white-space: nowrap;
+  }
+  .btn-download:hover { background: var(--accent); }
+  .btn-preview {
+    background: transparent; color: var(--text-secondary);
+    padding: 9px 14px; border: 1px solid var(--surface); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    letter-spacing: 0.06em; transition: all 0.2s;
+  }
+  .btn-preview:hover { border-color: var(--text-secondary); color: var(--text); }
+  .card-actions { display: flex; gap: 8px; }
+
+  /* new badge */
+  .new-badge {
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    background: var(--sage); color: #fff; padding: 2px 7px;
+    vertical-align: middle; margin-left: 8px; font-weight: 500;
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    text-align: center; padding: 72px 24px; display: none;
+  }
+  .empty-state h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300; margin-bottom: 12px;
+  }
+  .empty-state p { font-size: 14px; color: var(--text-secondary); }
+
+  /* ── SUBMIT A REQUEST STRIP ── */
+  .request-strip {
+    background: var(--surface); padding: 56px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 48px; align-items: center;
+  }
+  .request-strip h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300; margin-bottom: 10px;
+  }
+  .request-strip h2 em { color: var(--accent); }
+  .request-strip p { font-size: 14px; color: var(--text-secondary); line-height: 1.8; max-width: 480px; }
+  .request-form { display: flex; gap: 0; min-width: 340px; }
+  .request-form input {
+    flex: 1; padding: 13px 16px;
+    border: 1px solid var(--surface-deep); border-right: none;
+    background: var(--white); font-family: 'DM Sans', sans-serif;
+    font-size: 13px; color: var(--text); outline: none;
+  }
+  .request-form input:focus { border-color: var(--accent); }
+  .request-form button {
+    background: var(--text); color: var(--bg); padding: 13px 22px;
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.08em; cursor: pointer;
+    transition: background 0.25s; white-space: nowrap;
+  }
+  .request-form button:hover { background: var(--accent); }
+
+  /* ── PREVIEW MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(30,28,26,0.7); z-index: 500;
+    align-items: center; justify-content: center;
+    padding: 40px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg); max-width: 640px; width: 100%;
+    max-height: 80vh; overflow-y: auto; padding: 48px;
+    position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; font-size: 22px;
+    cursor: pointer; color: var(--text-secondary);
+    transition: color 0.2s; line-height: 1;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal-badge { margin-bottom: 20px; }
+  .modal h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px; font-weight: 300; line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .modal-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 28px; }
+  .modal-includes { margin-bottom: 28px; }
+  .modal-includes p {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-secondary); font-weight: 500; margin-bottom: 14px;
+  }
+  .include-list { display: flex; flex-direction: column; gap: 8px; }
+  .include-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px; color: var(--text); line-height: 1.6;
+  }
+  .include-item::before { content: '✓'; color: var(--sage); font-size: 12px; margin-top: 1px; flex-shrink: 0; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 32px; }
+  .modal-actions .btn-download { padding: 13px 28px; font-size: 13px; }
+  .btn-close-modal {
+    background: transparent; color: var(--text); border: 1px solid var(--surface-deep);
+    padding: 13px 20px; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-close-modal:hover { border-color: var(--text); }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background: var(--dark); padding: 72px 56px; text-align: center; }
+  .newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; color: #E8E0D5; margin: 16px 0 14px;
+  }
+  .newsletter p { font-size: 14px; color: #7A7268; max-width: 380px; margin: 0 auto 36px; line-height: 1.8; }
+  .nl-row { display: flex; max-width: 400px; margin: 0 auto; }
+  .nl-row input {
+    flex: 1; padding: 13px 16px;
+    border: 1px solid #3A3530; background: #2A2825;
+    color: #E8E0D5; font-family: 'DM Sans', sans-serif; font-size: 14px;
+    outline: none; border-right: none;
+  }
+  .nl-row input:focus { border-color: var(--accent); }
+  .nl-row button {
+    background: var(--accent); color: #fff; padding: 13px 24px;
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.1em; cursor: pointer;
+    transition: opacity 0.2s; white-space: nowrap;
+  }
+  .nl-row button:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 56px; border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-note { font-size: 12px; color: var(--text-secondary); }
+  .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--text-secondary); }
+  .footer-links a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wordmark">Long Road To <em>Maybe</em></div>
+  <div class="nav-links">
+    <a href="#">Blog</a>
+    <a href="#">Research</a>
+    <a href="#">Stories</a>
+    <a href="#" class="active">Resources</a>
+    <a href="#">Community</a>
+  </div>
+  <button class="nav-cta">Join us</button>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div>
+    <p class="eyebrow sage">Everything in one place</p>
+    <h1>The <em>Resource</em><br>Library</h1>
+  </div>
+  <div class="page-hero-right">
+    <p>Free, practical tools built by and for people going through IVF. No sign-up required for most resources — just download and use them.</p>
+    <div class="hero-stat-row">
+      <div class="hero-stat">
+        <strong>24</strong>
+        <span>Free resources</span>
+      </div>
+      <div class="hero-stat">
+        <strong>6</strong>
+        <span>Categories</span>
+      </div>
+      <div class="hero-stat">
+        <strong>Always</strong>
+        <span>Updated regularly</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-bar">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search-input" placeholder="Search resources — try 'tracker' or 'consultant'..." oninput="handleSearch(this)" />
+    <span class="search-clear" id="search-clear" onclick="clearSearch()">×</span>
+  </div>
+</div>
+
+<div class="rule"></div>
+
+<!-- MAIN LIBRARY LAYOUT -->
+<div class="library-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <p class="sidebar-label">Category</p>
+      <div class="sidebar-filters">
+        <button class="sidebar-btn active" onclick="filterCards('all', this)">All resources <span class="count">24</span></button>
+        <div class="sidebar-divider"></div>
+        <button class="sidebar-btn" onclick="filterCards('guide', this)">Guides <span class="count">7</span></button>
+        <button class="sidebar-btn" onclick="filterCards('tracker', this)">Trackers <span class="count">5</span></button>
+        <button class="sidebar-btn" onclick="filterCards('checklist', this)">Checklists <span class="count">5</span></button>
+        <button class="sidebar-btn" onclick="filterCards('template', this)">Templates <span class="count">4</span></button>
+        <button class="sidebar-btn" onclick="filterCards('explainer', this)">Explainers <span class="count">3</span></button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Stage of journey</p>
+      <div class="sidebar-filters">
+        <button class="sidebar-btn" onclick="filterCards('considering', this)">Considering IVF</button>
+        <button class="sidebar-btn" onclick="filterCards('preparing', this)">Preparing to start</button>
+        <button class="sidebar-btn" onclick="filterCards('mid-cycle', this)">Mid-cycle</button>
+        <button class="sidebar-btn" onclick="filterCards('after', this)">After a result</button>
+        <button class="sidebar-btn" onclick="filterCards('between', this)">Between cycles</button>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <p class="sidebar-label">Format</p>
+      <div class="sidebar-filters">
+        <button class="sidebar-btn" onclick="filterCards('pdf', this)">PDF <span class="count">↓</span></button>
+        <button class="sidebar-btn" onclick="filterCards('printable', this)">Printable <span class="count">↓</span></button>
+        <button class="sidebar-btn" onclick="filterCards('spreadsheet', this)">Spreadsheet <span class="count">↓</span></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+    <div class="main-header">
+      <h2 id="section-title">All resources</h2>
+      <div style="display:flex;gap:12px;align-items:center">
+        <span class="result-count" id="result-count">Showing 9 resources</span>
+      </div>
+    </div>
+
+    <!-- PINNED / FEATURED -->
+    <div class="pinned-resource" id="pinned-card">
+      <div>
+        <p class="pinned-badge">Most downloaded</p>
+        <h3>The Complete IVF Consultation Guide — questions, terms, and what to expect</h3>
+        <p>The resource our community reaches for most. Covers your first appointment through to cycle planning, with plain-English explanations of every term you're likely to hear.</p>
+        <div class="pinned-meta">
+          <span class="meta-pill">📄 PDF · 18 pages</span>
+          <span class="meta-pill">All stages</span>
+          <span class="meta-pill">Free</span>
+        </div>
+      </div>
+      <button class="btn-download-light" onclick="triggerDownload('Complete IVF Consultation Guide')">
+        ↓ Download free
+      </button>
+    </div>
+
+    <!-- RESOURCE GRID -->
+    <div class="resource-grid" id="resource-grid">
+
+      <!-- 1 -->
+      <div class="resource-card" data-type="tracker" data-tags="cycle tracker injection scan symptom">
+        <div class="card-top">
+          <div class="resource-icon sage-bg">📅</div>
+          <span class="resource-type type-tracker">Tracker</span>
+        </div>
+        <h3>Cycle Tracker — injections, scans &amp; how you feel <span class="new-badge">New</span></h3>
+        <p>Track every injection, scan result, and emotional moment through your cycle. Designed with the community to actually fit how IVF feels, not just how it works.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">Printable PDF · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('tracker')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('Cycle Tracker')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="resource-card" data-type="checklist" data-tags="checklist consultation questions clinic first appointment">
+        <div class="card-top">
+          <div class="resource-icon accent-bg">✓</div>
+          <span class="resource-type type-checklist">Checklist</span>
+        </div>
+        <h3>Questions for your first consultation — the ones no one thinks to ask</h3>
+        <p>Curated from hundreds of community responses. The questions that matter, grouped by topic, ready to print and bring with you.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">PDF · 2 pages · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('checklist')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('First Consultation Checklist')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 -->
+      <div class="resource-card" data-type="guide" data-tags="guide embryo grading terms glossary">
+        <div class="card-top">
+          <div class="resource-icon warm-bg">📖</div>
+          <span class="resource-type type-guide">Guide</span>
+        </div>
+        <h3>Plain-English glossary of IVF terms — from AMH to 2WW</h3>
+        <p>Every acronym, test, and procedure you'll encounter, explained clearly. Alphabetical with cross-references. Bookmark it for the moments you need it.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">PDF · 12 pages · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('guide')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('IVF Glossary')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 -->
+      <div class="resource-card" data-type="template" data-tags="template email letter clinic communication">
+        <div class="card-top">
+          <div class="resource-icon accent-bg">✉</div>
+          <span class="resource-type type-template">Template</span>
+        </div>
+        <h3>Email templates for communicating with your clinic — clearly and calmly</h3>
+        <p>When you're exhausted and emotional, finding the right words is hard. These templates cover results queries, protocol questions, and requesting more time.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">Doc · 6 templates · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('template')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('Clinic Email Templates')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 -->
+      <div class="resource-card" data-type="tracker" data-tags="medication tracker injection protocol stimulation">
+        <div class="card-top">
+          <div class="resource-icon sage-bg">💉</div>
+          <span class="resource-type type-tracker">Tracker</span>
+        </div>
+        <h3>Medication &amp; injection log — daily protocol made simple</h3>
+        <p>A daily log for tracking injections, timings, doses, and notes. Simple enough to use at 10pm after a long day. Spaces for both pen and digital use.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">Printable · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('tracker')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('Medication Log')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="resource-card" data-type="explainer" data-tags="explainer two week wait 2ww symptoms transfer">
+        <div class="card-top">
+          <div class="resource-icon warm-bg">⏳</div>
+          <span class="resource-type type-explainer">Explainer</span>
+        </div>
+        <h3>The two-week wait — what's actually happening, day by day</h3>
+        <p>A gentle, honest guide through the TWW. What symptoms mean (and don't mean), how to manage the uncertainty, and what the research says about early signs.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">PDF · 8 pages · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('explainer')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('Two Week Wait Guide')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7 -->
+      <div class="resource-card" data-type="checklist" data-tags="checklist partner support guide relationship">
+        <div class="card-top">
+          <div class="resource-icon accent-bg">🤝</div>
+          <span class="resource-type type-checklist">Checklist</span>
+        </div>
+        <h3>For partners — a guide to supporting someone through IVF</h3>
+        <p>A practical, honest guide for partners who want to help but don't always know how. Written with input from partners who've been through it.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">PDF · 6 pages · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('checklist')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('Partner Support Guide')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 -->
+      <div class="resource-card" data-type="template" data-tags="template work employer leave absence disclosure">
+        <div class="card-top">
+          <div class="resource-icon accent-bg">💼</div>
+          <span class="resource-type type-template">Template</span>
+        </div>
+        <h3>Talking to your employer about IVF — what you have to share and what you don't</h3>
+        <p>A template letter and guidance notes for navigating time off, flexible working, and disclosure. Reviewed for accuracy against current UK employment guidance.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">Doc + notes · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('template')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('Employer Letter Template')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9 -->
+      <div class="resource-card" data-type="guide" data-tags="guide grief loss negative result failed cycle">
+        <div class="card-top">
+          <div class="resource-icon warm-bg">🌿</div>
+          <span class="resource-type type-guide">Guide</span>
+        </div>
+        <h3>After a negative result — a gentle guide for the days that follow</h3>
+        <p>There's no roadmap for this. This guide doesn't offer false comfort — it offers company, practical suggestions, and space to feel however you feel.</p>
+        <div class="card-footer">
+          <span class="card-footer-meta">PDF · 10 pages · Free</span>
+          <div class="card-actions">
+            <button class="btn-preview" onclick="openModal('guide')">Preview</button>
+            <button class="btn-download" onclick="triggerDownload('After a Negative Result Guide')">↓ Download</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-state" id="empty-state">
+      <h3>No resources found</h3>
+      <p>Try a different search term, or <a href="#" style="color:var(--accent)">suggest a resource</a> you'd like to see.</p>
+    </div>
+
+  </main>
+</div>
+
+<!-- SUGGEST A RESOURCE -->
+<section class="request-strip">
+  <div>
+    <h2>Can't find what you <em>need</em>?</h2>
+    <p>Every resource in this library started as a gap someone identified. If there's something you wish existed — a guide, a template, a tracker — tell us. We build what the community actually needs.</p>
+  </div>
+  <div>
+    <div class="request-form" id="suggest-form">
+      <input type="text" id="suggest-input" placeholder="Describe the resource you need..." />
+      <button onclick="submitSuggestion()">Suggest it</button>
+    </div>
+    <p style="font-size:11px;color:var(--text-secondary);margin-top:10px;letter-spacing:0.04em">We read every suggestion.</p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="eyebrow accent">Monthly newsletter</p>
+  <h2>New resources, every month</h2>
+  <p>Join the community to be notified when new resources are added — plus research, stories, and support in your inbox once a month.</p>
+  <div class="nl-row">
+    <input type="email" placeholder="your@email.com" />
+    <button>Join us</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wordmark">Long Road To <em>Maybe</em></div>
+  <p class="footer-note">Built with care, by someone who's been there.</p>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Privacy</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<!-- PREVIEW MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-inner"></div>
+  </div>
+</div>
+
+<script>
+  // ── MODAL CONTENT ──
+  const modals = {
+    tracker: {
+      type: 'Tracker', typeClass: 'type-tracker',
+      title: 'Cycle Tracker — injections, scans & how you feel',
+      desc: 'A day-by-day tracker designed with the community to capture every part of a cycle — clinical data and emotional reality together. Because both matter.',
+      includes: [
+        'Daily injection log with dose, time, and site rotation',
+        'Scan result recording with space for follicle counts and lining measurements',
+        'Symptom and wellbeing tracker — physical and emotional',
+        'Space for notes from your clinic after each appointment',
+        'A summary page for your whole cycle at a glance',
+        'Formatted for A4 printing — one page per day'
+      ],
+      format: 'Printable PDF · A4 · Free'
+    },
+    checklist: {
+      type: 'Checklist', typeClass: 'type-checklist',
+      title: 'Questions for your first consultation',
+      desc: 'Built from a survey of over 200 community members asking what they wish they\'d known to ask. Grouped by topic so you can work through it naturally in the room.',
+      includes: [
+        'Questions about your specific test results and what they mean for you',
+        'Protocol questions — what to expect, what\'s adjustable',
+        'Questions about success rates for your specific profile',
+        'What to ask about embryo storage and future cycles',
+        'Practical questions about monitoring, timing, and clinic access',
+        'Space to add your own questions before the appointment'
+      ],
+      format: 'PDF · 2 pages · Free'
+    },
+    guide: {
+      type: 'Guide', typeClass: 'type-guide',
+      title: 'Plain-English glossary of IVF terms',
+      desc: 'From AMH to zona pellucida — every term, acronym, and procedure you\'ll encounter through diagnosis, treatment, and beyond. Written for people, not clinicians.',
+      includes: [
+        'All major diagnostic terms with plain-English explanations',
+        'Medication names — brand and generic — with what they do',
+        'Protocol terminology with diagrams where helpful',
+        'Lab terms: fertilisation, grading, blastocyst development',
+        'Acronyms list — TWW, FET, ICSI, PGT-A and more',
+        'Alphabetical index with cross-references throughout'
+      ],
+      format: 'PDF · 12 pages · Free'
+    },
+    template: {
+      type: 'Template', typeClass: 'type-template',
+      title: 'Email templates for communicating with your clinic',
+      desc: 'Six ready-to-use templates for the communications that feel hardest to write when you\'re already exhausted and emotionally stretched.',
+      includes: [
+        'Asking for clarification on results you don\'t understand',
+        'Requesting a longer consultation or second opinion',
+        'Querying a change to your protocol',
+        'Following up when you haven\'t heard back',
+        'Asking about costs, funding, or additional tests',
+        'Notifying your clinic of a concern mid-cycle'
+      ],
+      format: 'Word Doc · 6 templates · Free'
+    },
+    explainer: {
+      type: 'Explainer', typeClass: 'type-explainer',
+      title: 'The two-week wait — day by day',
+      desc: 'A calm, evidence-based companion for the hardest fortnight. Explains what\'s happening biologically each day, what symptoms do and don\'t indicate, and how to hold the uncertainty.',
+      includes: [
+        'Day-by-day breakdown of what happens after transfer',
+        'Which symptoms are common and what causes them',
+        'Why progesterone mimics early pregnancy symptoms',
+        'Honest guidance on testing early — the case for and against',
+        'Strategies for managing anxiety during the wait',
+        'What to do on results day — whatever the outcome'
+      ],
+      format: 'PDF · 8 pages · Free'
+    }
+  };
+
+  function openModal(type) {
+    const m = modals[type];
+    if (!m) return;
+    document.getElementById('modal-inner').innerHTML = `
+      <div class="modal-badge"><span class="resource-type ${m.typeClass}">${m.type}</span></div>
+      <h2>${m.title}</h2>
+      <p class="modal-desc">${m.desc}</p>
+      <div class="modal-includes">
+        <p>What's included</p>
+        <div class="include-list">
+          ${m.includes.map(i => `<div class="include-item">${i}</div>`).join('')}
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--text-secondary);letter-spacing:0.04em">${m.format}</p>
+      <div class="modal-actions">
+        <button class="btn-download" onclick="triggerDownload('${m.title}')">↓ Download free</button>
+        <button class="btn-close-modal" onclick="closeModal()">Close preview</button>
+      </div>
+    `;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  }
+
+  // ── DOWNLOAD SIMULATION ──
+  function triggerDownload(name) {
+    const btn = event.target;
+    const original = btn.innerHTML;
+    btn.innerHTML = '✓ Preparing...';
+    btn.style.background = 'var(--sage)';
+    setTimeout(() => {
+      btn.innerHTML = '✓ Downloaded!';
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.style.background = '';
+      }, 2000);
+    }, 800);
+  }
+
+  // ── FILTER ──
+  function filterCards(type, btn) {
+    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.resource-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const show = type === 'all' || card.dataset.type === type ||
+                   (card.dataset.tags && card.dataset.tags.includes(type));
+      card.style.display = show ? 'flex' : 'none';
+      if (show) visible++;
+    });
+
+    const pinned = document.getElementById('pinned-card');
+    pinned.style.display = (type === 'all' || type === 'guide') ? 'grid' : 'none';
+
+    document.getElementById('result-count').textContent =
+      `Showing ${visible} resource${visible !== 1 ? 's' : ''}`;
+    document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+
+    const labels = {
+      all: 'All resources', guide: 'Guides', tracker: 'Trackers',
+      checklist: 'Checklists', template: 'Templates', explainer: 'Explainers',
+      considering: 'Considering IVF', preparing: 'Preparing to start',
+      'mid-cycle': 'Mid-cycle', after: 'After a result', between: 'Between cycles',
+      pdf: 'PDF resources', printable: 'Printable resources', spreadsheet: 'Spreadsheets'
+    };
+    document.getElementById('section-title').textContent = labels[type] || 'Resources';
+  }
+
+  // ── SEARCH ──
+  function handleSearch(input) {
+    const val = input.value.toLowerCase().trim();
+    document.getElementById('search-clear').style.display = val ? 'block' : 'none';
+
+    const cards = document.querySelectorAll('.resource-card');
+    let visible = 0;
+    cards.forEach(card => {
+      const text = (card.textContent + ' ' + (card.dataset.tags || '')).toLowerCase();
+      const show = !val || text.includes(val);
+      card.style.display = show ? 'flex' : 'none';
+      if (show) visible++;
+    });
+
+    const pinned = document.getElementById('pinned-card');
+    pinned.style.display = (!val || 'consultation guide ivf complete'.includes(val)) ? 'grid' : 'none';
+
+    document.getElementById('result-count').textContent =
+      val ? `${visible} result${visible !== 1 ? 's' : ''} for "${val}"` : `Showing ${visible} resources`;
+    document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+    document.getElementById('section-title').textContent = val ? 'Search results' : 'All resources';
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('search-input');
+    input.value = '';
+    document.getElementById('search-clear').style.display = 'none';
+    handleSearch(input);
+  }
+
+  // ── SUGGEST ──
+  function submitSuggestion() {
+    const input = document.getElementById('suggest-input');
+    if (input.value.trim().length > 3) {
+      document.getElementById('suggest-form').innerHTML =
+        `<p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--sage)">Thank you — we'll look into that. ✦</p>`;
+    } else {
+      input.style.borderColor = 'var(--accent)';
+      input.placeholder = 'Please describe what you need...';
+    }
+  }
+
+  // keyboard shortcut
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Enter' && document.activeElement.id === 'suggest-input') submitSuggestion();
+  });
+</script>
+</body>
+</html>

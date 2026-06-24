@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community — Long Road To Maybe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:             #F6F4F1;
+    --text:           #2A2825;
+    --text-secondary: #6B6560;
+    --accent:         #9B8EA8;
+    --sage:           #7C9E8F;
+    --surface:        #EDE9E3;
+    --surface-deep:   #E2DDD6;
+    --dark:           #1E1C1A;
+    --dark-surface:   #2E2B28;
+    --white:          #FFFFFF;
+    --online:         #7DC17A;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--text);
+    font-weight: 300; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; transition: color 0.25s; }
+  em { font-style: italic; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 300;
+    background: var(--bg); border-bottom: 1px solid var(--surface);
+    padding: 20px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 400;
+    letter-spacing: 0.02em; white-space: nowrap; cursor: pointer;
+  }
+  .wordmark em { color: var(--accent); font-weight: 300; }
+  .nav-links { display: flex; gap: 36px; font-size: 13px; letter-spacing: 0.06em; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  .nav-cta {
+    background: var(--text); color: var(--bg);
+    padding: 10px 24px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.1em; transition: background 0.25s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--dark); padding: 80px 56px 72px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 20px;
+  }
+  .eyebrow.sage   { color: var(--sage); }
+  .eyebrow.accent { color: var(--accent); }
+  .eyebrow.muted  { color: var(--text-secondary); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 58px; font-weight: 300;
+    line-height: 1.1; color: #E8E0D5;
+    letter-spacing: -0.01em; margin-bottom: 22px;
+  }
+  .hero h1 em { color: var(--accent); }
+  .hero p { font-size: 15px; color: #8A817A; line-height: 1.85; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 12px; }
+  .btn-accent {
+    background: var(--accent); color: var(--white);
+    padding: 13px 28px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    letter-spacing: 0.07em; transition: opacity 0.2s;
+  }
+  .btn-accent:hover { opacity: 0.85; }
+  .btn-ghost-light {
+    background: transparent; color: #E8E0D5;
+    padding: 13px 28px; border: 1px solid #4A4540;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    letter-spacing: 0.07em; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-ghost-light:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* hero right — live chat preview */
+  .hero-chat-preview {
+    background: var(--dark-surface); padding: 28px;
+    border: 1px solid #3A3530;
+  }
+  .chat-preview-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid #3A3530;
+  }
+  .chat-preview-title {
+    font-size: 13px; color: #E8E0D5; letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .online-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--online); display: inline-block;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .online-count { font-size: 11px; color: #5A5248; }
+  .preview-messages { display: flex; flex-direction: column; gap: 14px; margin-bottom: 16px; }
+  .preview-msg { display: flex; gap: 10px; align-items: flex-start; }
+  .preview-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; color: var(--white); flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif; font-weight: 300;
+  }
+  .preview-msg-content { flex: 1; }
+  .preview-msg-name { font-size: 11px; color: #5A5248; margin-bottom: 4px; letter-spacing: 0.04em; }
+  .preview-msg-text {
+    font-size: 13px; color: #C4BDB5; line-height: 1.6;
+    background: #252320; padding: 10px 14px;
+  }
+  .preview-input {
+    display: flex; gap: 0; border: 1px solid #3A3530;
+  }
+  .preview-input input {
+    flex: 1; padding: 10px 14px;
+    background: #252320; border: none; outline: none;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; color: #6B6560;
+  }
+  .preview-input button {
+    background: var(--accent); color: var(--white);
+    border: none; padding: 0 16px; cursor: pointer;
+    font-size: 14px; transition: opacity 0.2s;
+  }
+  .preview-input button:hover { opacity: 0.85; }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--surface); padding: 32px 56px;
+    display: flex; gap: 0;
+  }
+  .stat-item {
+    flex: 1; text-align: center;
+    border-right: 1px solid var(--surface-deep);
+    padding: 0 32px;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item strong {
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 40px; font-weight: 300; color: var(--text);
+    line-height: 1;
+  }
+  .stat-item strong em { color: var(--accent); }
+  .stat-item span { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.08em; margin-top: 6px; display: block; }
+
+  /* ── MAIN LAYOUT ── */
+  .community-layout {
+    max-width: 1140px; margin: 0 auto;
+    padding: 64px 56px 88px;
+    display: grid; grid-template-columns: 1fr 340px;
+    gap: 56px; align-items: start;
+  }
+
+  /* ── FORUM SECTION ── */
+  .forum-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 32px;
+  }
+  .forum-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 300;
+  }
+  .forum-tabs {
+    display: flex; gap: 0; margin-bottom: 32px;
+    border-bottom: 1px solid var(--surface);
+  }
+  .forum-tab {
+    padding: 10px 20px; background: none; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.07em; cursor: pointer; color: var(--text-secondary);
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all 0.2s;
+  }
+  .forum-tab:hover { color: var(--text); }
+  .forum-tab.active { color: var(--text); border-bottom-color: var(--text); }
+
+  /* topic boards */
+  .topic-boards { display: flex; flex-direction: column; gap: 16px; margin-bottom: 40px; }
+  .topic-board {
+    border: 1px solid var(--surface); background: var(--white);
+    padding: 24px 28px; cursor: pointer;
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 20px; align-items: center; transition: all 0.2s;
+  }
+  .topic-board:hover { border-color: var(--accent); transform: translateX(3px); }
+  .board-icon {
+    width: 46px; height: 46px; display: flex;
+    align-items: center; justify-content: center; font-size: 22px;
+    flex-shrink: 0;
+  }
+  .board-icon.sage-bg   { background: rgba(124,158,143,0.12); }
+  .board-icon.accent-bg { background: rgba(155,142,168,0.12); }
+  .board-icon.warm-bg   { background: rgba(42,40,37,0.06); }
+  .board-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px; font-weight: 400; margin-bottom: 4px;
+  }
+  .board-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .board-stats { text-align: right; flex-shrink: 0; }
+  .board-stats strong { display: block; font-size: 18px; font-weight: 400; color: var(--text); font-family: 'Cormorant Garamond', serif; }
+  .board-stats span { font-size: 10px; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* thread list */
+  .thread-list { display: flex; flex-direction: column; gap: 0; }
+  .thread-item {
+    padding: 20px 0; border-bottom: 1px solid var(--surface);
+    cursor: pointer; display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px; align-items: start; transition: all 0.2s;
+  }
+  .thread-item:first-child { border-top: 1px solid var(--surface); }
+  .thread-item:hover { background: var(--surface); margin: 0 -16px; padding: 20px 16px; }
+  .thread-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 16px;
+    color: var(--white); flex-shrink: 0;
+  }
+  .thread-body { min-width: 0; }
+  .thread-title { font-size: 14px; color: var(--text); margin-bottom: 4px; line-height: 1.4; font-weight: 400; }
+  .thread-meta { font-size: 11px; color: var(--text-secondary); }
+  .thread-meta .board-tag {
+    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 7px; margin-right: 8px; font-weight: 500;
+  }
+  .thread-right { text-align: right; flex-shrink: 0; }
+  .thread-replies { font-size: 12px; color: var(--text-secondary); }
+  .thread-replies strong { color: var(--text); font-weight: 400; display: block; font-family: 'Cormorant Garamond', serif; font-size: 18px; }
+
+  .new-post-btn {
+    background: var(--text); color: var(--bg); border: none;
+    padding: 11px 24px; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.08em; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .new-post-btn:hover { background: var(--accent); }
+
+  /* ── SIDEBAR ── */
+  .sidebar { display: flex; flex-direction: column; gap: 28px; }
+  .sidebar-card { background: var(--white); border: 1px solid var(--surface); padding: 28px; }
+  .sidebar-card-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 500; color: var(--text-secondary); margin-bottom: 20px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--surface);
+  }
+
+  /* members online */
+  .online-members { display: flex; flex-direction: column; gap: 12px; }
+  .online-member { display: flex; align-items: center; gap: 12px; }
+  .member-avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 14px;
+    color: var(--white); flex-shrink: 0; position: relative;
+  }
+  .member-avatar::after {
+    content: ''; position: absolute;
+    bottom: 0; right: 0; width: 8px; height: 8px;
+    background: var(--online); border-radius: 50%;
+    border: 2px solid var(--white);
+  }
+  .member-info { flex: 1; min-width: 0; }
+  .member-name { font-size: 13px; font-weight: 400; color: var(--text); }
+  .member-status { font-size: 11px; color: var(--text-secondary); }
+  .member-stage {
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 2px 7px; background: var(--surface); color: var(--text-secondary);
+    white-space: nowrap;
+  }
+
+  /* recent activity */
+  .activity-list { display: flex; flex-direction: column; gap: 14px; }
+  .activity-item { display: flex; gap: 10px; align-items: flex-start; }
+  .activity-icon { font-size: 13px; width: 20px; flex-shrink: 0; margin-top: 1px; }
+  .activity-text { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .activity-text a { color: var(--text); font-weight: 400; }
+  .activity-text a:hover { color: var(--accent); }
+  .activity-time { font-size: 10px; color: var(--surface-deep); margin-top: 2px; }
+
+  /* community guidelines */
+  .guidelines { display: flex; flex-direction: column; gap: 10px; }
+  .guideline { display: flex; gap: 10px; font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+  .guideline::before { content: '✦'; color: var(--accent); font-size: 10px; margin-top: 2px; flex-shrink: 0; }
+
+  /* ── LIVE CHAT SECTION ── */
+  .chat-section {
+    background: var(--dark); padding: 64px 56px;
+  }
+  .chat-section-inner {
+    max-width: 1140px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start;
+  }
+  .chat-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; color: #E8E0D5;
+    line-height: 1.15; margin: 16px 0 18px;
+  }
+  .chat-section h2 em { color: var(--accent); }
+  .chat-section p { font-size: 14px; color: #7A7268; line-height: 1.85; margin-bottom: 28px; }
+  .chat-features { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .chat-feature { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; color: #A09890; }
+  .chat-feature-icon { color: var(--sage); flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  /* THE LIVE CHAT UI */
+  .chat-ui {
+    background: var(--dark-surface); border: 1px solid #3A3530;
+    display: flex; flex-direction: column; height: 480px;
+  }
+  .chat-header {
+    padding: 16px 20px; border-bottom: 1px solid #3A3530;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .chat-header-left { display: flex; align-items: center; gap: 10px; }
+  .chat-room-name { font-size: 13px; color: #E8E0D5; font-weight: 400; }
+  .chat-room-sub { font-size: 11px; color: #5A5248; }
+  .chat-header-right { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--online); }
+
+  .chat-room-tabs {
+    display: flex; gap: 0; border-bottom: 1px solid #3A3530;
+    overflow-x: auto;
+  }
+  .chat-room-tab {
+    padding: 9px 16px; background: none; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 11px;
+    letter-spacing: 0.06em; cursor: pointer; color: #5A5248;
+    border-bottom: 2px solid transparent; white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .chat-room-tab:hover { color: #A09890; }
+  .chat-room-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 16px 20px;
+    display: flex; flex-direction: column; gap: 14px;
+    scrollbar-width: thin; scrollbar-color: #3A3530 transparent;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: #3A3530; }
+
+  .chat-msg { display: flex; gap: 10px; align-items: flex-start; }
+  .chat-msg.own { flex-direction: row-reverse; }
+  .chat-msg-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 13px;
+    color: var(--white); flex-shrink: 0;
+  }
+  .chat-msg-content { max-width: 72%; }
+  .chat-msg.own .chat-msg-content { align-items: flex-end; display: flex; flex-direction: column; }
+  .chat-msg-name { font-size: 10px; color: #5A5248; margin-bottom: 4px; letter-spacing: 0.06em; }
+  .chat-msg.own .chat-msg-name { text-align: right; }
+  .chat-bubble {
+    padding: 10px 14px; font-size: 13px; line-height: 1.6;
+    color: #C4BDB5; background: #252320;
+  }
+  .chat-msg.own .chat-bubble { background: var(--accent); color: var(--white); }
+  .chat-time { font-size: 10px; color: #3A3530; margin-top: 4px; }
+  .chat-date-divider {
+    text-align: center; font-size: 10px; color: #3A3530;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin: 4px 0;
+  }
+  .typing-indicator {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .typing-dots {
+    background: #252320; padding: 12px 16px;
+    display: flex; gap: 4px; align-items: center;
+  }
+  .typing-dots span {
+    width: 5px; height: 5px; background: #5A5248;
+    border-radius: 50%; animation: typing 1.4s infinite;
+  }
+  .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typing { 0%, 60%, 100% { opacity: 0.3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+  .chat-input-row {
+    padding: 14px 16px; border-top: 1px solid #3A3530;
+    display: flex; gap: 8px; align-items: center;
+  }
+  .chat-input {
+    flex: 1; background: #252320; border: 1px solid #3A3530;
+    padding: 10px 14px; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; color: #E8E0D5; outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-input::placeholder { color: #4A4540; }
+  .chat-send {
+    background: var(--accent); color: var(--white);
+    border: none; width: 38px; height: 38px; cursor: pointer;
+    font-size: 15px; transition: opacity 0.2s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chat-send:hover { opacity: 0.85; }
+
+  /* ── JOIN STRIP ── */
+  .join-strip {
+    background: var(--surface); padding: 72px 56px;
+    text-align: center;
+  }
+  .join-strip h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 46px; font-weight: 300; margin: 16px 0 14px;
+  }
+  .join-strip h2 em { color: var(--accent); }
+  .join-strip p { font-size: 15px; color: var(--text-secondary); max-width: 440px; margin: 0 auto 40px; line-height: 1.85; }
+  .join-form { display: flex; gap: 0; max-width: 420px; margin: 0 auto; }
+  .join-form input {
+    flex: 1; padding: 14px 16px;
+    border: 1px solid var(--surface-deep); border-right: none;
+    background: var(--white); font-family: 'DM Sans', sans-serif;
+    font-size: 14px; color: var(--text); outline: none;
+  }
+  .join-form input:focus { border-color: var(--accent); }
+  .join-form button {
+    background: var(--text); color: var(--bg); padding: 14px 24px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.1em;
+    cursor: pointer; transition: background 0.25s; white-space: nowrap;
+  }
+  .join-form button:hover { background: var(--accent); }
+  .join-note { font-size: 11px; color: var(--text-secondary); margin-top: 14px; letter-spacing: 0.04em; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 56px; border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-note { font-size: 12px; color: var(--text-secondary); }
+  .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--text-secondary); }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(30,28,26,0.75); z-index: 500;
+    align-items: center; justify-content: center; padding: 40px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg); max-width: 580px; width: 100%;
+    padding: 48px; position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 18px; right: 22px;
+    background: none; border: none; font-size: 22px;
+    cursor: pointer; color: var(--text-secondary); line-height: 1;
+  }
+  .modal-close:hover { color: var(--text); }
+  .modal h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 300; margin-bottom: 8px;
+  }
+  .modal-sub { font-size: 13px; color: var(--text-secondary); margin-bottom: 28px; line-height: 1.6; }
+  .form-row { margin-bottom: 16px; }
+  .form-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); font-weight: 500; margin-bottom: 6px; display: block; }
+  .form-input {
+    width: 100%; padding: 12px 14px;
+    border: 1px solid var(--surface-deep); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    color: var(--text); outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-textarea {
+    width: 100%; padding: 12px 14px; height: 90px; resize: vertical;
+    border: 1px solid var(--surface-deep); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    color: var(--text); outline: none; transition: border-color 0.2s;
+    font-weight: 300;
+  }
+  .form-textarea:focus { border-color: var(--accent); }
+  .form-select {
+    width: 100%; padding: 12px 14px;
+    border: 1px solid var(--surface-deep); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+    outline: none; appearance: none; cursor: pointer;
+  }
+  .modal-actions { display: flex; gap: 10px; margin-top: 24px; }
+  .btn-submit {
+    background: var(--text); color: var(--bg); border: none;
+    padding: 13px 28px; font-family: 'DM Sans', sans-serif;
+    font-size: 13px; letter-spacing: 0.07em; cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: var(--accent); }
+  .btn-cancel {
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--surface-deep); padding: 13px 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-cancel:hover { border-color: var(--text-secondary); color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wordmark">Long Road To <em>Maybe</em></div>
+  <div class="nav-links">
+    <a href="#">Blog</a>
+    <a href="#">Research</a>
+    <a href="#">Stories</a>
+    <a href="#">Resources</a>
+    <a href="#" class="active">Community</a>
+  </div>
+  <button class="nav-cta" onclick="openJoinModal()">Join us</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <p class="eyebrow accent">A place that understands</p>
+    <h1>You've found the<br>community you were<br><em>looking for</em></h1>
+    <p>Real people, real conversations. A place where no question is too small, no feeling is too big, and everyone here already understands without you having to explain.</p>
+    <div class="hero-btns">
+      <button class="btn-accent" onclick="openJoinModal()">Join the community</button>
+      <button class="btn-ghost-light" onclick="document.getElementById('chat-section').scrollIntoView({behavior:'smooth'})">See the live chat</button>
+    </div>
+  </div>
+  <div class="hero-chat-preview">
+    <div class="chat-preview-bar">
+      <div class="chat-preview-title">
+        <span class="online-dot"></span> General support
+      </div>
+      <span class="online-count">14 online now</span>
+    </div>
+    <div class="preview-messages">
+      <div class="preview-msg">
+        <div class="preview-avatar" style="background:var(--sage)">S</div>
+        <div class="preview-msg-content">
+          <p class="preview-msg-name">SophiaR · Cycle 2</p>
+          <div class="preview-msg-text">Just got my day 5 results — 2 blasts. Feeling a strange mix of relieved and terrified. Anyone else?</div>
+        </div>
+      </div>
+      <div class="preview-msg">
+        <div class="preview-avatar" style="background:var(--accent)">M</div>
+        <div class="preview-msg-content">
+          <p class="preview-msg-name">MaraH · Cycle 3</p>
+          <div class="preview-msg-text">Yes. Exactly this. Two felt like everything and nothing at the same time. Sending you so much love. 💜</div>
+        </div>
+      </div>
+      <div class="preview-msg">
+        <div class="preview-avatar" style="background:#B07B5B">J</div>
+        <div class="preview-msg-content">
+          <p class="preview-msg-name">JennaK · Transfer done</p>
+          <div class="preview-msg-text">Two is genuinely great. Quality over quantity — that's what my embryologist told me and she was right. You've got this 🌿</div>
+        </div>
+      </div>
+    </div>
+    <div class="preview-input">
+      <input type="text" placeholder="Join the conversation..." />
+      <button>→</button>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item"><strong>2,<em>4</em>00+</strong><span>Community members</span></div>
+  <div class="stat-item"><strong>186</strong><span>Threads this month</span></div>
+  <div class="stat-item"><strong>14</strong><span>Online right now</span></div>
+  <div class="stat-item"><strong>100%</strong><span>Free, always</span></div>
+</div>
+
+<!-- MAIN COMMUNITY LAYOUT -->
+<div class="community-layout">
+
+  <!-- FORUM -->
+  <div>
+    <div class="forum-header">
+      <h2>Discussion boards</h2>
+      <button class="new-post-btn" onclick="openPostModal()">+ New post</button>
+    </div>
+
+    <div class="forum-tabs">
+      <button class="forum-tab active" onclick="switchTab('boards', this)">Boards</button>
+      <button class="forum-tab" onclick="switchTab('recent', this)">Recent posts</button>
+      <button class="forum-tab" onclick="switchTab('popular', this)">Most replied</button>
+    </div>
+
+    <!-- BOARDS VIEW -->
+    <div id="tab-boards">
+      <div class="topic-boards">
+
+        <div class="topic-board" onclick="switchTab('recent', document.querySelectorAll('.forum-tab')[1])">
+          <div class="board-icon sage-bg">🌱</div>
+          <div>
+            <p class="board-title">Starting out & considering IVF</p>
+            <p class="board-desc">For those at the beginning — first consultations, test results, decisions, fears. No question is too basic here.</p>
+          </div>
+          <div class="board-stats"><strong>142</strong><span>Posts</span></div>
+        </div>
+
+        <div class="topic-board" onclick="switchTab('recent', document.querySelectorAll('.forum-tab')[1])">
+          <div class="board-icon accent-bg">💉</div>
+          <div>
+            <p class="board-title">During treatment — stimulation & scans</p>
+            <p class="board-desc">Injections, monitoring appointments, side effects, egg collection. For the ones in the thick of it right now.</p>
+          </div>
+          <div class="board-stats"><strong>318</strong><span>Posts</span></div>
+        </div>
+
+        <div class="topic-board" onclick="switchTab('recent', document.querySelectorAll('.forum-tab')[1])">
+          <div class="board-icon accent-bg">⏳</div>
+          <div>
+            <p class="board-title">The two-week wait</p>
+            <p class="board-desc">The hardest fortnight. A place to be honest about how it really feels — and to find people who get it without having to explain.</p>
+          </div>
+          <div class="board-stats"><strong>276</strong><span>Posts</span></div>
+        </div>
+
+        <div class="topic-board" onclick="switchTab('recent', document.querySelectorAll('.forum-tab')[1])">
+          <div class="board-icon warm-bg">🌿</div>
+          <div>
+            <p class="board-title">After a negative result or loss</p>
+            <p class="board-desc">A gentler space. For grief, for processing, for not being okay, and for the slow finding of steady ground again.</p>
+          </div>
+          <div class="board-stats"><strong>194</strong><span>Posts</span></div>
+        </div>
+
+        <div class="topic-board" onclick="switchTab('recent', document.querySelectorAll('.forum-tab')[1])">
+          <div class="board-icon sage-bg">❤️</div>
+          <div>
+            <p class="board-title">Success stories & what came next</p>
+            <p class="board-desc">Positive results, pregnancies, and life after IVF. Hope is allowed here. So is the complexity that comes with it.</p>
+          </div>
+          <div class="board-stats"><strong>89</strong><span>Posts</span></div>
+        </div>
+
+        <div class="topic-board" onclick="switchTab('recent', document.querySelectorAll('.forum-tab')[1])">
+          <div class="board-icon warm-bg">🔬</div>
+          <div>
+            <p class="board-title">Research, questions & clinic comparisons</p>
+            <p class="board-desc">Discuss new studies, ask clinical questions, share experiences of different clinics. Evidence-focused, always kind.</p>
+          </div>
+          <div class="board-stats"><strong>211</strong><span>Posts</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RECENT / POPULAR VIEW -->
+    <div id="tab-recent" style="display:none">
+      <div class="thread-list">
+
+        <div class="thread-item" onclick="openPostModal()">
+          <div class="thread-avatar" style="background:var(--sage)">S</div>
+          <div class="thread-body">
+            <p class="thread-title">Day 5 results in — 2 blasts. Feeling everything and nothing. Anyone relate?</p>
+            <div class="thread-meta">
+              <span class="board-tag" style="background:rgba(124,158,143,0.1);color:var(--sage)">During treatment</span>
+              SophiaR · 12 minutes ago
+            </div>
+          </div>
+          <div class="thread-right"><div class="thread-replies"><strong>8</strong>replies</div></div>
+        </div>
+
+        <div class="thread-item" onclick="openPostModal()">
+          <div class="thread-avatar" style="background:var(--accent)">L</div>
+          <div class="thread-body">
+            <p class="thread-title">Has anyone switched clinics mid-journey? How did you approach it?</p>
+            <div class="thread-meta">
+              <span class="board-tag" style="background:rgba(155,142,168,0.1);color:var(--accent)">Research & questions</span>
+              LucyM · 1 hour ago
+            </div>
+          </div>
+          <div class="thread-right"><div class="thread-replies"><strong>23</strong>replies</div></div>
+        </div>
+
+        <div class="thread-item" onclick="openPostModal()">
+          <div class="thread-avatar" style="background:#B07B5B">T</div>
+          <div class="thread-body">
+            <p class="thread-title">What I wish someone had told me before my first injection — a list from someone now on cycle 3</p>
+            <div class="thread-meta">
+              <span class="board-tag" style="background:rgba(124,158,143,0.1);color:var(--sage)">Starting out</span>
+              TaraW · 3 hours ago
+            </div>
+          </div>
+          <div class="thread-right"><div class="thread-replies"><strong>41</strong>replies</div></div>
+        </div>
+
+        <div class="thread-item" onclick="openPostModal()">
+          <div class="thread-avatar" style="background:#7A8FA8">R</div>
+          <div class="thread-body">
+            <p class="thread-title">It worked. I can barely type this. After three cycles and two years — it actually worked.</p>
+            <div class="thread-meta">
+              <span class="board-tag" style="background:rgba(155,142,168,0.1);color:var(--accent)">Success stories</span>
+              RachelP · Yesterday
+            </div>
+          </div>
+          <div class="thread-right"><div class="thread-replies"><strong>67</strong>replies</div></div>
+        </div>
+
+        <div class="thread-item" onclick="openPostModal()">
+          <div class="thread-avatar" style="background:#8F9E7C">A</div>
+          <div class="thread-body">
+            <p class="thread-title">Day 6 of the TWW and I'm losing my mind. Please talk to me.</p>
+            <div class="thread-meta">
+              <span class="board-tag" style="background:rgba(124,158,143,0.1);color:var(--sage)">Two-week wait</span>
+              AnnaB · 2 days ago
+            </div>
+          </div>
+          <div class="thread-right"><div class="thread-replies"><strong>34</strong>replies</div></div>
+        </div>
+
+        <div class="thread-item" onclick="openPostModal()">
+          <div class="thread-avatar" style="background:var(--accent)">C</div>
+          <div class="thread-body">
+            <p class="thread-title">Honest question: how do you keep going after a negative result when you're already running out of fight?</p>
+            <div class="thread-meta">
+              <span class="board-tag" style="background:rgba(42,40,37,0.06);color:var(--text-secondary)">After a loss</span>
+              ClaireD · 2 days ago
+            </div>
+          </div>
+          <div class="thread-right"><div class="thread-replies"><strong>52</strong>replies</div></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-card">
+      <p class="sidebar-card-label">Online now</p>
+      <div class="online-members">
+        <div class="online-member">
+          <div class="member-avatar" style="background:var(--sage)">S</div>
+          <div class="member-info">
+            <p class="member-name">SophiaR</p>
+            <p class="member-status">Posting in General</p>
+          </div>
+          <span class="member-stage">Cycle 2</span>
+        </div>
+        <div class="online-member">
+          <div class="member-avatar" style="background:var(--accent)">M</div>
+          <div class="member-info">
+            <p class="member-name">MaraH</p>
+            <p class="member-status">Reading threads</p>
+          </div>
+          <span class="member-stage">Cycle 3</span>
+        </div>
+        <div class="online-member">
+          <div class="member-avatar" style="background:#B07B5B">J</div>
+          <div class="member-info">
+            <p class="member-name">JennaK</p>
+            <p class="member-status">In the TWW room</p>
+          </div>
+          <span class="member-stage">Transfer done</span>
+        </div>
+        <div class="online-member">
+          <div class="member-avatar" style="background:#7A8FA8">R</div>
+          <div class="member-info">
+            <p class="member-name">RachelP</p>
+            <p class="member-status">Posting a story</p>
+          </div>
+          <span class="member-stage">Pregnant 🌿</span>
+        </div>
+        <p style="font-size:11px;color:var(--text-secondary);margin-top:8px;cursor:pointer" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">+ 10 more members online →</p>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <p class="sidebar-card-label">Recent activity</p>
+      <div class="activity-list">
+        <div class="activity-item">
+          <span class="activity-icon">💬</span>
+          <div>
+            <p class="activity-text"><a href="#">MaraH</a> replied to "Day 5 results in"</p>
+            <p class="activity-time">2 minutes ago</p>
+          </div>
+        </div>
+        <div class="activity-item">
+          <span class="activity-icon">✦</span>
+          <div>
+            <p class="activity-text"><a href="#">TaraW</a> posted a new thread in Starting out</p>
+            <p class="activity-time">3 hours ago</p>
+          </div>
+        </div>
+        <div class="activity-item">
+          <span class="activity-icon">❤️</span>
+          <div>
+            <p class="activity-text">67 people replied to <a href="#">RachelP's success story</a></p>
+            <p class="activity-time">Yesterday</p>
+          </div>
+        </div>
+        <div class="activity-item">
+          <span class="activity-icon">📄</span>
+          <div>
+            <p class="activity-text">New resource added: <a href="#">Cycle Tracker</a></p>
+            <p class="activity-time">2 days ago</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-card">
+      <p class="sidebar-card-label">Community values</p>
+      <div class="guidelines">
+        <div class="guideline">This is a safe space. Every person here is doing their best in an incredibly hard situation.</div>
+        <div class="guideline">No medical advice — share experiences, not prescriptions. Always speak to your clinic.</div>
+        <div class="guideline">Kindness first. Always. Even when you're exhausted and scared.</div>
+        <div class="guideline">What's shared here stays here. Respect everyone's privacy.</div>
+        <div class="guideline">You're allowed to not be okay. You're also allowed to be hopeful.</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- LIVE CHAT SECTION -->
+<section class="chat-section" id="chat-section">
+  <div class="chat-section-inner">
+    <div>
+      <p class="eyebrow accent">Live support chat</p>
+      <h2>When you need<br>someone <em>right now</em></h2>
+      <p>The forum is there when you want to think and read. The live chat is there when you just need to talk to someone who gets it — in real time, right now, whatever time it is.</p>
+      <div class="chat-features">
+        <div class="chat-feature"><span class="chat-feature-icon">✦</span> Drop in and out — no commitment, no pressure</div>
+        <div class="chat-feature"><span class="chat-feature-icon">✦</span> Multiple rooms by topic and stage of journey</div>
+        <div class="chat-feature"><span class="chat-feature-icon">✦</span> Community-moderated and always kind</div>
+        <div class="chat-feature"><span class="chat-feature-icon">✦</span> Your name is only what you choose to share</div>
+      </div>
+      <button class="btn-accent" onclick="focusChatInput()">Join the conversation</button>
+    </div>
+
+    <!-- LIVE CHAT UI -->
+    <div class="chat-ui">
+      <div class="chat-header">
+        <div class="chat-header-left">
+          <div>
+            <p class="chat-room-name">General support</p>
+            <p class="chat-room-sub">Open to all members</p>
+          </div>
+        </div>
+        <div class="chat-header-right">
+          <span class="online-dot"></span> 14 online
+        </div>
+      </div>
+
+      <div class="chat-room-tabs">
+        <button class="chat-room-tab active" onclick="switchRoom('general', this)">General</button>
+        <button class="chat-room-tab" onclick="switchRoom('tww', this)">Two-week wait</button>
+        <button class="chat-room-tab" onclick="switchRoom('treatment', this)">Treatment</button>
+        <button class="chat-room-tab" onclick="switchRoom('loss', this)">After a loss</button>
+        <button class="chat-room-tab" onclick="switchRoom('success', this)">Success 🌿</button>
+      </div>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-date-divider">Today</div>
+
+        <div class="chat-msg">
+          <div class="chat-msg-avatar" style="background:var(--sage)">S</div>
+          <div class="chat-msg-content">
+            <p class="chat-msg-name">SophiaR</p>
+            <div class="chat-bubble">Just got my day 5 results — 2 blasts. Feeling a strange mix of relieved and terrified. Anyone else?</div>
+            <p class="chat-time">2:14 PM</p>
+          </div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-msg-avatar" style="background:var(--accent)">M</div>
+          <div class="chat-msg-content">
+            <p class="chat-msg-name">MaraH</p>
+            <div class="chat-bubble">Yes. Exactly this. Two felt like everything and nothing at the same time. Sending you so much love 💜</div>
+            <p class="chat-time">2:16 PM</p>
+          </div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-msg-avatar" style="background:#B07B5B">J</div>
+          <div class="chat-msg-content">
+            <p class="chat-msg-name">JennaK</p>
+            <div class="chat-bubble">Two is genuinely great. Quality over quantity — that's what my embryologist told me and she was right. You've got this 🌿</div>
+            <p class="chat-time">2:17 PM</p>
+          </div>
+        </div>
+
+        <div class="chat-msg">
+          <div class="chat-msg-avatar" style="background:var(--sage)">S</div>
+          <div class="chat-msg-content">
+            <p class="chat-msg-name">SophiaR</p>
+            <div class="chat-bubble">Thank you both. I keep reminding myself it only takes one. But then I spiral. The waiting is the hardest part.</div>
+            <p class="chat-time">2:19 PM</p>
+          </div>
+        </div>
+
+        <div class="typing-indicator" id="typing-indicator" style="display:none">
+          <div class="chat-msg-avatar" style="background:var(--accent)">M</div>
+          <div class="typing-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-row">
+        <input type="text" class="chat-input" id="chat-input" placeholder="Say something kind..." onkeydown="handleChatKey(event)" />
+        <button class="chat-send" onclick="sendMessage()">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN STRIP -->
+<section class="join-strip">
+  <p class="eyebrow accent">Become a member</p>
+  <h2>Join the community —<br>it's completely <em>free</em></h2>
+  <p>Access all discussion boards, the live chat, and a community of people who understand the road you're on. No cost, no catch.</p>
+  <div class="join-form" id="join-form-area">
+    <input type="email" id="join-email" placeholder="your@email.com" />
+    <button onclick="handleJoin()">Join us</button>
+  </div>
+  <p class="join-note">Your details are never shared. Read our <a href="#" style="color:var(--accent)">privacy policy</a>.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wordmark">Long Road To <em>Maybe</em></div>
+  <p class="footer-note">Built with care, by someone who's been there.</p>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Privacy</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<!-- NEW POST MODAL -->
+<div class="modal-overlay" id="post-modal" onclick="closePostModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closePostModal()">×</button>
+    <div id="post-modal-inner">
+      <h2>Start a new post</h2>
+      <p class="modal-sub">Share what's on your mind. This community is here for all of it — the questions, the fears, the small victories, and everything in between.</p>
+      <div class="form-row">
+        <label class="form-label">Board</label>
+        <select class="form-select">
+          <option>Starting out & considering IVF</option>
+          <option>During treatment — stimulation & scans</option>
+          <option>The two-week wait</option>
+          <option>After a negative result or loss</option>
+          <option>Success stories & what came next</option>
+          <option>Research, questions & clinic comparisons</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-input" placeholder="What do you want to talk about?" id="post-title" />
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your post</label>
+        <textarea class="form-textarea" placeholder="Share as much or as little as you like. There's no wrong way to say it." id="post-body"></textarea>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your name (or a nickname)</label>
+        <input type="text" class="form-input" placeholder="What would you like to be called?" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn-submit" onclick="submitPost()">Post to community</button>
+        <button class="btn-cancel" onclick="closePostModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JOIN MODAL -->
+<div class="modal-overlay" id="join-modal" onclick="closeJoinModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeJoinModal()">×</button>
+    <h2>Join Long Road To <em style="color:var(--accent)">Maybe</em></h2>
+    <p class="modal-sub">Free access to the community, live chat, all resources, and the monthly newsletter. No payment needed, ever.</p>
+    <div class="form-row">
+      <label class="form-label">Your name or nickname</label>
+      <input type="text" class="form-input" placeholder="What would you like to be called?" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-input" placeholder="your@email.com" />
+    </div>
+    <div class="form-row">
+      <label class="form-label">Where are you in your journey?</label>
+      <select class="form-select">
+        <option>Just starting to explore IVF</option>
+        <option>Preparing for my first cycle</option>
+        <option>Currently in a cycle</option>
+        <option>In the two-week wait</option>
+        <option>After a negative result</option>
+        <option>After a positive result</option>
+        <option>Between cycles</option>
+        <option>Supporting a partner or friend</option>
+        <option>I'd rather not say</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-submit" onclick="submitJoin()">Join the community</button>
+      <button class="btn-cancel" onclick="closeJoinModal()">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── TABS ──
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.forum-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-boards').style.display  = (tab === 'boards')  ? 'block' : 'none';
+    document.getElementById('tab-recent').style.display  = (tab !== 'boards')  ? 'block' : 'none';
+  }
+
+  // ── CHAT ROOMS ──
+  const roomMessages = {
+    general:   ['SophiaR: Just got my day 5 results — 2 blasts 🌿', 'MaraH: Sending you so much love 💜', 'JennaK: Quality over quantity. You\'ve got this.'],
+    tww:       ['AnnaB: Day 6 and every twinge means something different', 'KateS: I tested at day 8. I know I shouldn\'t have.', 'NinaP: Hang in there. We\'re all here with you.'],
+    treatment: ['ClaireD: Scan this morning — 9 follicles! Cautiously optimistic', 'BethW: That\'s brilliant. When\'s collection?', 'ClaireD: Thursday hopefully 🤞'],
+    loss:      ['EmmaR: It\'s been 3 weeks and I still can\'t talk about it out loud', 'MaraH: You don\'t have to. You can just be here. 💜', 'LisaT: We\'re here whenever you\'re ready.'],
+    success:   ['RachelP: I can barely type this. After 3 cycles — it worked.', 'Everyone: 💜💜💜 Congratulations 💜💜💜', 'JennaK: This made my whole week. So happy for you.']
+  };
+
+  function switchRoom(room, btn) {
+    document.querySelectorAll('.chat-room-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const msgs = document.getElementById('chat-messages');
+    const colors = { general: 'var(--sage)', tww: '#8F9E7C', treatment: 'var(--accent)', loss: '#7A8FA8', success: '#B07B5B' };
+    const color = colors[room] || 'var(--sage)';
+    msgs.innerHTML = '<div class="chat-date-divider">Today</div>';
+    (roomMessages[room] || []).forEach((msg, i) => {
+      const [name, ...parts] = msg.split(': ');
+      const text = parts.join(': ');
+      const initial = name[0];
+      const time = `${2 + i}:${String(14 + i * 3).padStart(2,'0')} PM`;
+      msgs.innerHTML += `
+        <div class="chat-msg">
+          <div class="chat-msg-avatar" style="background:${color}">${initial}</div>
+          <div class="chat-msg-content">
+            <p class="chat-msg-name">${name}</p>
+            <div class="chat-bubble">${text}</div>
+            <p class="chat-time">${time}</p>
+          </div>
+        </div>`;
+    });
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  // ── SEND CHAT MESSAGE ──
+  const autoReplies = [
+    { name: 'MaraH', color: 'var(--accent)', msg: 'Sending you so much love 💜 This community gets it.' },
+    { name: 'JennaK', color: '#B07B5B', msg: 'You\'re not alone in this — we\'re all here with you.' },
+    { name: 'SophiaR', color: 'var(--sage)', msg: 'Thank you for sharing that. It takes courage 🌿' },
+    { name: 'RachelP', color: '#7A8FA8', msg: 'I felt exactly the same way. This community helped me through it.' },
+  ];
+  let replyIndex = 0;
+
+  function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const val = input.value.trim();
+    if (!val) return;
+    const msgs = document.getElementById('chat-messages');
+    const now = new Date();
+    const time = `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+    msgs.innerHTML += `
+      <div class="chat-msg own">
+        <div class="chat-msg-avatar" style="background:var(--accent)">Y</div>
+        <div class="chat-msg-content">
+          <p class="chat-msg-name">You</p>
+          <div class="chat-bubble">${val}</div>
+          <p class="chat-time">${time}</p>
+        </div>
+      </div>`;
+    input.value = '';
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // show typing indicator then auto-reply
+    const typing = document.getElementById('typing-indicator');
+    if (typing) {
+      typing.style.display = 'flex';
+      msgs.appendChild(typing);
+      msgs.scrollTop = msgs.scrollHeight;
+      setTimeout(() => {
+        typing.style.display = 'none';
+        const reply = autoReplies[replyIndex % autoReplies.length];
+        replyIndex++;
+        const replyTime = `${now.getHours()}:${String(now.getMinutes() + 1).padStart(2,'0')}`;
+        msgs.innerHTML += `
+          <div class="chat-msg">
+            <div class="chat-msg-avatar" style="background:${reply.color}">${reply.name[0]}</div>
+            <div class="chat-msg-content">
+              <p class="chat-msg-name">${reply.name}</p>
+              <div class="chat-bubble">${reply.msg}</div>
+              <p class="chat-time">${replyTime}</p>
+            </div>
+          </div>`;
+        msgs.scrollTop = msgs.scrollHeight;
+      }, 1800);
+    }
+  }
+
+  function handleChatKey(e) { if (e.key === 'Enter') sendMessage(); }
+  function focusChatInput() {
+    document.getElementById('chat-input').focus();
+    document.getElementById('chat-section').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ── POST MODAL ──
+  function openPostModal() {
+    document.getElementById('post-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePostModal() {
+    document.getElementById('post-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closePostModalOutside(e) {
+    if (e.target === document.getElementById('post-modal')) closePostModal();
+  }
+  function submitPost() {
+    const title = document.getElementById('post-title').value.trim();
+    if (title.length < 5) {
+      document.getElementById('post-title').style.borderColor = 'var(--accent)';
+      return;
+    }
+    document.getElementById('post-modal-inner').innerHTML = `
+      <div style="text-align:center;padding:24px 0">
+        <p style="font-size:40px;margin-bottom:16px">✦</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;margin-bottom:12px">Your post is live</h2>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:28px">Thank you for sharing. The community will find it — you're never posting into silence here.</p>
+        <button class="btn-submit" onclick="closePostModal()">Back to community</button>
+      </div>`;
+  }
+
+  // ── JOIN MODAL ──
+  function openJoinModal() {
+    document.getElementById('join-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeJoinModal() {
+    document.getElementById('join-modal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeJoinModalOutside(e) {
+    if (e.target === document.getElementById('join-modal')) closeJoinModal();
+  }
+  function submitJoin() {
+    document.querySelector('#join-modal .modal').innerHTML = `
+      <div style="text-align:center;padding:32px 0">
+        <p style="font-size:48px;margin-bottom:20px">💜</p>
+        <h2 style="font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;margin-bottom:14px;color:var(--text)">Welcome to the community</h2>
+        <p style="font-size:14px;color:var(--text-secondary);line-height:1.85;max-width:360px;margin:0 auto 28px">You're not on this road alone anymore. Check your inbox for a welcome message — and whenever you're ready, we're here.</p>
+        <button class="btn-submit" onclick="closeJoinModal()">Go to the community</button>
+      </div>`;
+  }
+  function handleJoin() {
+    const email = document.getElementById('join-email').value;
+    if (email && email.includes('@')) {
+      document.getElementById('join-form-area').innerHTML =
+        `<p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:22px;color:var(--sage)">Welcome. You're one of us now. ✦</p>`;
+    } else {
+      document.getElementById('join-email').style.borderColor = 'var(--accent)';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closePostModal(); closeJoinModal(); }
+  });
+</script>
+</body>
+</html>

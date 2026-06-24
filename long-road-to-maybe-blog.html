@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Long Road To Maybe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:             #F6F4F1;
+    --text:           #2A2825;
+    --text-secondary: #6B6560;
+    --accent:         #9B8EA8;
+    --sage:           #7C9E8F;
+    --surface:        #EDE9E3;
+    --dark:           #1E1C1A;
+    --dark-surface:   #2E2B28;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; transition: color 0.25s; }
+  em { font-style: italic; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--bg);
+    border-bottom: 1px solid var(--surface);
+    padding: 20px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 400;
+    letter-spacing: 0.02em; white-space: nowrap;
+  }
+  .wordmark em { color: var(--accent); font-weight: 300; }
+  .nav-links { display: flex; gap: 36px; font-size: 13px; letter-spacing: 0.06em; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--text); color: var(--bg);
+    padding: 10px 24px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.1em;
+    transition: background 0.25s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* ── BLOG INDEX HERO ── */
+  .blog-hero {
+    padding: 80px 56px 64px;
+    max-width: 900px; margin: 0 auto; text-align: center;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 22px;
+  }
+  .eyebrow.sage   { color: var(--sage); }
+  .eyebrow.accent { color: var(--accent); }
+  .eyebrow.muted  { color: var(--text-secondary); }
+  .blog-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; font-weight: 300;
+    line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 22px;
+  }
+  .blog-hero h1 em { color: var(--accent); }
+  .blog-hero p {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.85; max-width: 480px; margin: 0 auto;
+  }
+
+  /* ── FILTER TABS ── */
+  .filter-bar {
+    padding: 0 56px 56px;
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  }
+  .filter-btn {
+    padding: 8px 22px; border: 1px solid var(--surface);
+    background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.08em; cursor: pointer;
+    color: var(--text-secondary); transition: all 0.2s;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--text); color: var(--bg); border-color: var(--text);
+  }
+  .filter-btn.active-sage {
+    background: var(--sage); color: #fff; border-color: var(--sage);
+  }
+  .filter-btn.active-accent {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+
+  .rule { height: 1px; background: var(--surface); margin: 0 56px; }
+
+  /* ── FEATURED POST ── */
+  .featured {
+    max-width: 1140px; margin: 0 auto;
+    padding: 72px 56px 56px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 72px; align-items: center;
+  }
+  .featured-label {
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 500;
+    color: var(--text-secondary); margin-bottom: 32px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .featured-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--surface);
+  }
+  .featured-image {
+    background: var(--surface);
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .featured-image-inner {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #EDE9E3 0%, #DDD5CC 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .featured-image-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px; font-style: italic;
+    color: var(--text-secondary); text-align: center; padding: 24px;
+    line-height: 1.6;
+  }
+  .post-type-tag {
+    display: inline-block;
+    font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; font-weight: 500;
+    padding: 5px 12px; margin-bottom: 20px;
+  }
+  .tag-research { background: rgba(124,158,143,0.12); color: var(--sage); }
+  .tag-story    { background: rgba(155,142,168,0.12); color: var(--accent); }
+  .tag-resource { background: rgba(124,158,143,0.12); color: var(--sage); }
+  .featured-content h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300; line-height: 1.2;
+    margin-bottom: 18px; letter-spacing: -0.01em;
+  }
+  .featured-content h2 em { color: var(--accent); }
+  .featured-content .excerpt {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.85; margin-bottom: 28px;
+  }
+  .featured-meta {
+    font-size: 12px; color: var(--text-secondary);
+    margin-bottom: 28px; letter-spacing: 0.04em;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .featured-meta span::before { content: '·'; margin-right: 16px; }
+  .featured-meta span:first-child::before { content: ''; margin: 0; }
+  .read-link {
+    font-size: 13px; letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--text);
+    padding-bottom: 2px; display: inline-block;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .read-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── BLOG GRID ── */
+  .blog-grid-section { max-width: 1140px; margin: 0 auto; padding: 0 56px 88px; }
+  .section-divider {
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; font-weight: 500;
+    color: var(--text-secondary);
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 40px;
+  }
+  .section-divider::before, .section-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--surface);
+  }
+
+  .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 36px; margin-bottom: 64px; }
+
+  .post-card {
+    cursor: pointer; transition: transform 0.25s;
+  }
+  .post-card:hover { transform: translateY(-4px); }
+  .post-card:hover .post-card-title { color: var(--accent); }
+
+  .post-card-image {
+    aspect-ratio: 3/2; margin-bottom: 22px;
+    background: linear-gradient(135deg, #EDE9E3 0%, #E0D9D0 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .post-card-image.sage-tint {
+    background: linear-gradient(135deg, #E4EDE9 0%, #D2E3DC 100%);
+  }
+  .post-card-image.accent-tint {
+    background: linear-gradient(135deg, #EAE6EE 0%, #DDD6E5 100%);
+  }
+  .post-card-image-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; font-style: italic;
+    color: var(--text-secondary); text-align: center; padding: 16px;
+  }
+
+  .post-card-meta {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .post-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; line-height: 1.35;
+    margin-bottom: 12px; transition: color 0.2s;
+  }
+  .post-card-excerpt {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.8; margin-bottom: 18px;
+  }
+  .post-card-footer {
+    font-size: 11px; color: var(--text-secondary);
+    letter-spacing: 0.05em; padding-top: 16px;
+    border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+  }
+
+  /* ── FULL ARTICLE VIEW ── */
+  .article-wrap {
+    display: none;
+    max-width: 720px; margin: 0 auto; padding: 72px 56px 88px;
+  }
+  .article-wrap.visible { display: block; }
+  .back-btn {
+    font-size: 12px; letter-spacing: 0.08em;
+    color: var(--text-secondary); cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 48px; transition: color 0.2s;
+    background: none; border: none; font-family: 'DM Sans', sans-serif;
+    padding: 0;
+  }
+  .back-btn:hover { color: var(--accent); }
+  .article-header { margin-bottom: 48px; }
+  .article-header .post-type-tag { margin-bottom: 20px; }
+  .article-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; line-height: 1.1;
+    letter-spacing: -0.01em; margin-bottom: 24px;
+  }
+  .article-header h1 em { color: var(--accent); }
+  .article-byline {
+    display: flex; align-items: center; gap: 18px;
+    padding: 20px 0; border-top: 1px solid var(--surface);
+    border-bottom: 1px solid var(--surface);
+  }
+  .byline-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--sage));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 18px;
+    color: #fff; font-weight: 300; flex-shrink: 0;
+  }
+  .byline-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .byline-text strong { color: var(--text); font-weight: 400; display: block; }
+
+  .article-hero-image {
+    width: 100%; aspect-ratio: 16/9; margin: 40px 0;
+    background: linear-gradient(135deg, #EDE9E3 0%, #DDD5CC 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .article-hero-image p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 15px;
+    color: var(--text-secondary); text-align: center; padding: 24px;
+  }
+
+  .article-body { font-size: 17px; line-height: 1.9; color: var(--text); font-weight: 300; }
+  .article-body p { margin-bottom: 28px; }
+  .article-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400; margin: 52px 0 18px;
+    line-height: 1.2;
+  }
+  .article-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 400; margin: 36px 0 14px;
+  }
+  .article-body blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 40px 0; padding: 20px 28px;
+    background: var(--surface);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style: italic;
+    font-weight: 300; line-height: 1.6; color: var(--text);
+  }
+  .article-body strong { font-weight: 500; }
+  .article-body a { color: var(--accent); border-bottom: 1px solid rgba(155,142,168,0.3); padding-bottom: 1px; }
+  .article-body a:hover { border-color: var(--accent); }
+
+  .article-tags { margin: 48px 0 0; padding-top: 32px; border-top: 1px solid var(--surface); display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag-pill {
+    padding: 6px 16px; font-size: 11px; letter-spacing: 0.08em;
+    background: var(--surface); color: var(--text-secondary);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tag-pill:hover { background: var(--text); color: var(--bg); }
+
+  .article-share { margin-top: 48px; padding: 32px; background: var(--surface); }
+  .article-share p {
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-secondary); margin-bottom: 16px;
+  }
+  .share-btns { display: flex; gap: 10px; }
+  .share-btn {
+    padding: 9px 20px; border: 1px solid var(--surface);
+    background: var(--bg); font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.06em; cursor: pointer;
+    color: var(--text); transition: all 0.2s;
+  }
+  .share-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  /* related */
+  .related { max-width: 1140px; margin: 0 auto; padding: 0 56px 88px; }
+  .related h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 300; margin-bottom: 36px;
+  }
+  .related-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+  .related-card {
+    padding: 24px; background: var(--surface); cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .related-card:hover { transform: translateY(-3px); }
+  .related-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px; font-weight: 400; line-height: 1.35; margin: 10px 0 8px;
+  }
+  .related-card p { font-size: 12px; color: var(--text-secondary); line-height: 1.7; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background: var(--dark); padding: 72px 56px; text-align: center; }
+  .newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; color: #E8E0D5;
+    margin: 16px 0 14px;
+  }
+  .newsletter p { font-size: 14px; color: #7A7268; max-width: 380px; margin: 0 auto 36px; line-height: 1.8; }
+  .email-row { display: flex; max-width: 400px; margin: 0 auto; }
+  .email-row input {
+    flex: 1; padding: 13px 16px; border: 1px solid #3A3530;
+    background: #2A2825; color: #E8E0D5;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+    border-right: none;
+  }
+  .email-row input:focus { border-color: var(--accent); }
+  .email-row button {
+    background: var(--accent); color: #fff; padding: 13px 24px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.1em;
+    cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+  }
+  .email-row button:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 56px; border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-note { font-size: 12px; color: var(--text-secondary); }
+  .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--text-secondary); }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* UTIL */
+  .hidden { display: none; }
+  .index-view { display: block; }
+  .index-view.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wordmark" style="cursor:pointer" onclick="showIndex()">Long Road To <em>Maybe</em></div>
+  <div class="nav-links">
+    <a href="#" onclick="showIndex(); return false;">Blog</a>
+    <a href="#">Research</a>
+    <a href="#">Stories</a>
+    <a href="#">Resources</a>
+    <a href="#">Community</a>
+  </div>
+  <button class="nav-cta">Join us</button>
+</nav>
+
+<!-- ══════════════════════════ INDEX VIEW ══════════════════════════ -->
+<div class="index-view" id="index-view">
+
+  <!-- BLOG HERO -->
+  <div class="blog-hero">
+    <p class="eyebrow muted">Everything in one place</p>
+    <h1>The <em>Blog</em></h1>
+    <p>Research translated, stories shared, and resources built — all for the people walking this road.</p>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('all', this)">All posts</button>
+    <button class="filter-btn" onclick="setFilter('research', this)">Research</button>
+    <button class="filter-btn" onclick="setFilter('story', this)">Personal stories</button>
+    <button class="filter-btn" onclick="setFilter('resource', this)">Resources</button>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- FEATURED -->
+  <div class="featured">
+    <div>
+      <p class="featured-label">Featured post</p>
+      <div class="featured-image">
+        <div class="featured-image-inner">
+          <p class="featured-image-placeholder">Your featured post image will appear here</p>
+        </div>
+      </div>
+    </div>
+    <div class="featured-content">
+      <span class="post-type-tag tag-research">Research</span>
+      <h2>What the latest embryo grading research <em>actually</em> means for your cycle</h2>
+      <div class="featured-meta">
+        <span>By the LRTM Team</span>
+        <span>June 2025</span>
+        <span>5 min read</span>
+      </div>
+      <p class="excerpt">New guidance from ESHRE has simplified how clinics grade embryos. If your clinic hasn't explained what changed — and what it means for your chances — here's what you need to know before your next appointment.</p>
+      <a href="#" class="read-link" onclick="showArticle('research'); return false;">Read the full post →</a>
+    </div>
+  </div>
+
+  <div class="rule" style="margin-bottom: 64px;"></div>
+
+  <!-- BLOG GRID -->
+  <div class="blog-grid-section">
+
+    <p class="section-divider">Recent posts</p>
+
+    <div class="blog-grid" id="blog-grid">
+
+      <!-- CARD 1 - story -->
+      <div class="post-card" data-type="story" onclick="showArticle('story')">
+        <div class="post-card-image accent-tint">
+          <p class="post-card-image-label">Your image here</p>
+        </div>
+        <div class="post-card-meta">
+          <span class="post-type-tag tag-story" style="margin:0">Personal story</span>
+        </div>
+        <h3 class="post-card-title">Three rounds, two losses, and the moment I stopped apologising for how I felt</h3>
+        <p class="post-card-excerpt">What no one tells you about grief that comes in waves — and how one member found steady ground again.</p>
+        <div class="post-card-footer">
+          <span>8 min read</span>
+          <span>May 2025</span>
+        </div>
+      </div>
+
+      <!-- CARD 2 - resource -->
+      <div class="post-card" data-type="resource" onclick="showArticle('resource')">
+        <div class="post-card-image sage-tint">
+          <p class="post-card-image-label">Your image here</p>
+        </div>
+        <div class="post-card-meta">
+          <span class="post-type-tag tag-resource" style="margin:0">Resource</span>
+        </div>
+        <h3 class="post-card-title">Questions to bring to your first consultation that your clinic won't think to answer</h3>
+        <p class="post-card-excerpt">A downloadable checklist built from the questions our community wished they'd known to ask before they started.</p>
+        <div class="post-card-footer">
+          <span>Download · Free</span>
+          <span>April 2025</span>
+        </div>
+      </div>
+
+      <!-- CARD 3 - research -->
+      <div class="post-card" data-type="research" onclick="showArticle('research')">
+        <div class="post-card-image">
+          <p class="post-card-image-label">Your image here</p>
+        </div>
+        <div class="post-card-meta">
+          <span class="post-type-tag tag-research" style="margin:0">Research</span>
+        </div>
+        <h3 class="post-card-title">The link between sleep quality and IVF outcomes — what the studies say</h3>
+        <p class="post-card-excerpt">Three recent papers suggest sleep disruption in the stimulation phase may affect egg quality. Here's what the evidence actually shows.</p>
+        <div class="post-card-footer">
+          <span>6 min read</span>
+          <span>March 2025</span>
+        </div>
+      </div>
+
+      <!-- CARD 4 - story -->
+      <div class="post-card" data-type="story" onclick="showArticle('story')">
+        <div class="post-card-image accent-tint">
+          <p class="post-card-image-label">Your image here</p>
+        </div>
+        <div class="post-card-meta">
+          <span class="post-type-tag tag-story" style="margin:0">Personal story</span>
+        </div>
+        <h3 class="post-card-title">My husband and I nearly didn't make it through. Here's what kept us together.</h3>
+        <p class="post-card-excerpt">IVF puts couples under extraordinary pressure. One reader shares, honestly, what pulled them apart and what brought them back.</p>
+        <div class="post-card-footer">
+          <span>10 min read</span>
+          <span>February 2025</span>
+        </div>
+      </div>
+
+      <!-- CARD 5 - resource -->
+      <div class="post-card" data-type="resource" onclick="showArticle('resource')">
+        <div class="post-card-image sage-tint">
+          <p class="post-card-image-label">Your image here</p>
+        </div>
+        <div class="post-card-meta">
+          <span class="post-type-tag tag-resource" style="margin:0">Resource</span>
+        </div>
+        <h3 class="post-card-title">A cycle tracker you'll actually want to use — free printable</h3>
+        <p class="post-card-excerpt">Designed with the community, not for a textbook. Track injections, scans, symptoms, and how you're feeling — all in one place.</p>
+        <div class="post-card-footer">
+          <span>Download · Free</span>
+          <span>January 2025</span>
+        </div>
+      </div>
+
+      <!-- CARD 6 - research -->
+      <div class="post-card" data-type="research" onclick="showArticle('research')">
+        <div class="post-card-image">
+          <p class="post-card-image-label">Your image here</p>
+        </div>
+        <div class="post-card-meta">
+          <span class="post-type-tag tag-research" style="margin:0">Research</span>
+        </div>
+        <h3 class="post-card-title">Frozen vs fresh embryo transfer — what the current evidence actually favours</h3>
+        <p class="post-card-excerpt">The conversation has shifted. We look at what recent large-scale trials say about outcomes and whether your clinic's preference is evidence-based.</p>
+        <div class="post-card-footer">
+          <span>7 min read</span>
+          <span>December 2024</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LOAD MORE -->
+    <div style="text-align:center; padding-top: 16px;">
+      <button style="background:transparent; border:1px solid var(--surface); padding:13px 36px; font-family:'DM Sans',sans-serif; font-size:13px; letter-spacing:0.06em; cursor:pointer; color:var(--text-secondary); transition:all 0.2s;" onmouseover="this.style.borderColor='var(--text)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--surface)';this.style.color='var(--text-secondary)'">
+        Load more posts
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<!-- ══════════════════════ END INDEX VIEW ══════════════════════════ -->
+
+
+<!-- ══════════════════════ ARTICLE VIEW ═══════════════════════════ -->
+<div class="article-wrap hidden" id="article-view">
+
+  <!-- BACK -->
+  <button class="back-btn" onclick="showIndex()">← Back to Blog</button>
+
+  <!-- ARTICLE HEADER -->
+  <div class="article-header" id="article-header">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- HERO IMAGE -->
+  <div class="article-hero-image">
+    <p>Your article header image will appear here</p>
+  </div>
+
+  <!-- BODY -->
+  <div class="article-body" id="article-body">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- TAGS -->
+  <div class="article-tags">
+    <span class="tag-pill">IVF</span>
+    <span class="tag-pill">Embryo transfer</span>
+    <span class="tag-pill">Research</span>
+    <span class="tag-pill">Clinic questions</span>
+  </div>
+
+  <!-- SHARE -->
+  <div class="article-share" style="margin-top: 40px;">
+    <p>Share this post</p>
+    <div class="share-btns">
+      <button class="share-btn">Copy link</button>
+      <button class="share-btn">Share via email</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- RELATED (shown with article) -->
+<div class="related hidden" id="related-section">
+  <h3>You might also find these helpful</h3>
+  <div class="related-grid">
+    <div class="related-card" onclick="showArticle('story')">
+      <span class="post-type-tag tag-story" style="font-size:9px;letter-spacing:0.15em;padding:4px 10px">Personal story</span>
+      <h4>Three rounds, two losses, and the moment I stopped apologising</h4>
+      <p>8 min read · May 2025</p>
+    </div>
+    <div class="related-card" onclick="showArticle('resource')">
+      <span class="post-type-tag tag-resource" style="font-size:9px;letter-spacing:0.15em;padding:4px 10px">Resource</span>
+      <h4>Questions to bring to your first consultation</h4>
+      <p>Free download · April 2025</p>
+    </div>
+    <div class="related-card" onclick="showArticle('research')">
+      <span class="post-type-tag tag-research" style="font-size:9px;letter-spacing:0.15em;padding:4px 10px">Research</span>
+      <h4>The link between sleep quality and IVF outcomes</h4>
+      <p>6 min read · March 2025</p>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="eyebrow accent">Monthly newsletter</p>
+  <h2>Stay gently informed</h2>
+  <p>One email a month. New research, a story, and something useful — no overwhelm.</p>
+  <div class="email-row">
+    <input type="email" placeholder="your@email.com" />
+    <button>Join us</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wordmark">Long Road To <em>Maybe</em></div>
+  <p class="footer-note">Built with care, by someone who's been there.</p>
+  <div class="footer-links">
+    <a href="#">About</a>
+    <a href="#">Privacy</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // ── ARTICLE CONTENT ──
+  const articles = {
+    research: {
+      type: 'Research',
+      typeClass: 'tag-research',
+      title: "What the latest embryo grading research <em>actually</em> means for your cycle",
+      author: 'Long Road To Maybe Team',
+      date: 'June 2025',
+      readTime: '5 min read',
+      body: `
+        <p>If you've been through an IVF cycle, you've probably heard your embryologist talk about embryo grades. A "5AA". A "3BB". Numbers and letters that carry enormous emotional weight — but which many of us have never had properly explained.</p>
+
+        <p>New guidance published earlier this year by ESHRE (the European Society of Human Reproduction and Embryology) has simplified grading standards across clinics. Here's what changed, what it means, and — most importantly — the questions it's worth asking your team before your next transfer.</p>
+
+        <h2>Why grading matters — and why it's always been complicated</h2>
+
+        <p>Embryo grading is a way for embryologists to assess the likelihood that an embryo will successfully implant. The grading looks at how the embryo has developed — its size, the quality of the cells inside it, and the layer of cells that will become the placenta.</p>
+
+        <blockquote>"A grade isn't a guarantee. A lower-graded embryo can still result in a healthy pregnancy. What grading gives us is a probability, not a certainty."</blockquote>
+
+        <p>The challenge has always been that clinics have used different grading systems, making it almost impossible to compare results or outcomes between fertility centres. A "good" embryo at one clinic might be classified differently at another.</p>
+
+        <h2>What the new guidance changes</h2>
+
+        <p>ESHRE's updated consensus paper recommends standardising grading around a single scale, with clearer definitions for each stage of development. The aim is to make grading more consistent and more meaningful — both for clinicians and for patients.</p>
+
+        <p>In practical terms, this means that clinics adopting the new guidance will use the same language to describe the same thing. It also means that if you're switching clinics mid-treatment, your records should be more straightforwardly interpretable.</p>
+
+        <h2>What to ask your clinic</h2>
+
+        <p>Not every clinic has adopted the updated guidance yet. Before your next appointment, it's worth asking directly: <strong>which grading system do you use, and has it changed recently?</strong> You might also ask how your clinic defines the grade given to your embryo — what it includes, what it doesn't, and what it means for the decision about which embryo to transfer first.</p>
+
+        <p>The bottom line: a grade tells you something, but not everything. The most important thing is that you feel informed enough to ask the questions that matter to you — and that your team takes the time to answer them properly.</p>
+      `
+    },
+    story: {
+      type: 'Personal story',
+      typeClass: 'tag-story',
+      title: "Three rounds, two losses, and the moment I stopped <em>apologising</em> for how I felt",
+      author: 'A member of our community',
+      date: 'May 2025',
+      readTime: '8 min read',
+      body: `
+        <p>I want to start by saying something that took me a long time to believe: what you're feeling is allowed. All of it. The anger, the numbness, the dark three-in-the-morning thoughts. The grief that doesn't look like grief because there was never a birth, never a funeral, never an occasion the world would recognise.</p>
+
+        <p>We went through three rounds. Two of them ended in early loss — losses that were medically acknowledged and then somehow expected to be emotionally processed in the same breath. Nobody was unkind. Everyone was just... moving on to the next step. And I kept apologising for not being ready to move on with them.</p>
+
+        <h2>The specific loneliness of IVF grief</h2>
+
+        <p>People grieve differently, and IVF grief has a texture that's hard to describe to someone who hasn't been in it. It's grief that's tangled up with hope — because you have to hope, in order to keep going. So you're holding the loss and the next cycle in the same hands, at the same time.</p>
+
+        <blockquote>"I wasn't sad and then okay. I was sad and hopeful and exhausted and determined and furious, all at once, for months. That's not a breakdown. That's just what this is."</blockquote>
+
+        <p>I started apologising — to my husband, to my friends, to my fertility team — for still being affected. For crying at the wrong moments. For not being able to talk about it calmly. As if the appropriate response to losing something you wanted more than anything was to be tidy about it.</p>
+
+        <h2>The moment something shifted</h2>
+
+        <p>I can't point to a dramatic turning point. What I can point to is a conversation with another woman who had been through four cycles. She said, very simply: "You don't have to be okay about this. You're allowed to find this as hard as it is."</p>
+
+        <p>It sounds small. It wasn't. I had been performing resilience for so long that I had started to mistake the performance for the thing itself. Hearing someone give me permission — actual, direct permission — to be as undone as I actually felt was the beginning of something settling.</p>
+
+        <h2>What I would tell myself at the start</h2>
+
+        <p>Find someone — a person, a community, a therapist, a forum — where you don't have to perform strength. Not because you're weak, but because strength doesn't mean pretending. Let the people around you know specifically what you need from them, because most of them want to help but don't know how. And stop apologising for the size of what this is.</p>
+
+        <p>The road is long. You're allowed to sit down sometimes.</p>
+      `
+    },
+    resource: {
+      type: 'Resource',
+      typeClass: 'tag-resource',
+      title: "Questions to bring to your first consultation — the ones your clinic won't think to answer",
+      author: 'Long Road To Maybe Team',
+      date: 'April 2025',
+      readTime: 'Free download',
+      body: `
+        <p>Your first IVF consultation will cover a lot of ground. Protocols, timelines, costs, tests. Your consultant will be thorough. But there are questions that rarely get asked in that room — not because your clinic is hiding anything, but because they're asked from the inside of a process that you're only just joining.</p>
+
+        <p>This guide was built from the questions our community submitted after the fact. The things they wished they'd asked at the start. We've grouped them below, and there's a downloadable printable version at the end of this page.</p>
+
+        <h2>About your specific situation</h2>
+
+        <p><strong>What does my individual profile suggest about how my body is likely to respond to stimulation?</strong> This is different from general statistics. You want to understand what your AMH, AFC, and other markers mean for you specifically — not the average patient.</p>
+
+        <p><strong>Are there any results from my initial tests that you'd want to investigate further before we start?</strong> Sometimes clinics proceed when it might be worth pausing. It's okay to ask.</p>
+
+        <blockquote>"I wish I'd asked what 'monitoring' actually meant — how many scans, how often, what they were looking for. I arrived at the first scan not knowing what I was hoping to hear."</blockquote>
+
+        <h2>About the process</h2>
+
+        <p><strong>Walk me through what a typical cycle looks like at your clinic, day by day.</strong> Ask for a written version if one exists.</p>
+
+        <p><strong>Who will I speak to on weekends, bank holidays, and outside clinic hours?</strong> IVF doesn't follow business hours. You need to know who picks up.</p>
+
+        <p><strong>What happens if my response is different from expected — too high, too low?</strong> Clinics should have a clear protocol for both scenarios. Ask to hear it.</p>
+
+        <h2>About success and statistics</h2>
+
+        <p><strong>What are your clinic's success rates for someone with my profile?</strong> Clinic-wide statistics are less useful than rates for your age group, diagnosis, and embryo stage. Ask specifically.</p>
+
+        <p><strong>How do you define a successful outcome in your statistics — positive test, clinical pregnancy, or live birth?</strong> These are very different numbers. The answer matters.</p>
+
+        <h2>About support</h2>
+
+        <p><strong>What emotional support do you offer, or can you refer me to, during and between cycles?</strong> Some clinics have counsellors. Others don't. It's worth knowing before you're in the middle of it and looking for help.</p>
+
+        <p>The downloadable version of this checklist is formatted to print and bring to your appointment. You don't have to ask every question — use it as a prompt, and mark the ones that matter most to you.</p>
+      `
+    }
+  };
+
+  // ── VIEW SWITCHING ──
+  function showIndex() {
+    document.getElementById('index-view').classList.remove('hidden');
+    document.getElementById('article-view').classList.add('hidden');
+    document.getElementById('related-section').classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showArticle(type) {
+    const a = articles[type];
+    if (!a) return;
+
+    // Build header
+    document.getElementById('article-header').innerHTML = `
+      <span class="post-type-tag ${a.typeClass}">${a.type}</span>
+      <h1>${a.title}</h1>
+      <div class="article-byline">
+        <div class="byline-avatar">L</div>
+        <div class="byline-text">
+          <strong>${a.author}</strong>
+          ${a.date} &nbsp;·&nbsp; ${a.readTime}
+        </div>
+      </div>
+    `;
+
+    document.getElementById('article-body').innerHTML = a.body;
+
+    document.getElementById('index-view').classList.add('hidden');
+    document.getElementById('article-view').classList.remove('hidden');
+    document.getElementById('related-section').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── FILTER ──
+  function setFilter(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.post-card').forEach(card => {
+      card.style.display = (type === 'all' || card.dataset.type === type) ? 'block' : 'none';
+    });
+  }
+
+  // ── COPY LINK ──
+  document.addEventListener('click', function(e) {
+    if (e.target.textContent === 'Copy link') {
+      e.target.textContent = 'Copied!';
+      setTimeout(() => e.target.textContent = 'Copy link', 2000);
+    }
+  });
+</script>
+</body>
+</html>
