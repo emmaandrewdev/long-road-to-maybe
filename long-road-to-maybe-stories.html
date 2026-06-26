@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stories — Long Road To Maybe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:             #F6F4F1;
+    --text:           #2A2825;
+    --text-secondary: #6B6560;
+    --accent:         #9B8EA8;
+    --sage:           #7C9E8F;
+    --surface:        #EDE9E3;
+    --surface-deep:   #E2DDD6;
+    --dark:           #1E1C1A;
+    --dark-surface:   #2E2B28;
+    --white:          #FFFFFF;
+    --warning:        #C4956A;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--text);
+    font-weight: 300; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; transition: color 0.25s; }
+  em { font-style: italic; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 300;
+    background: var(--bg); border-bottom: 1px solid var(--surface);
+    padding: 20px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 400;
+    letter-spacing: 0.02em; white-space: nowrap; cursor: pointer;
+  }
+  .wordmark em { color: var(--accent); font-weight: 300; }
+  .nav-links { display: flex; gap: 36px; font-size: 13px; letter-spacing: 0.06em; }
+  .nav-links a { transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+  .nav-cta {
+    background: var(--text); color: var(--bg);
+    padding: 10px 24px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.1em; transition: background 0.25s;
+  }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 96px 56px 0;
+    max-width: 1140px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: end;
+    padding-bottom: 72px;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 22px;
+  }
+  .eyebrow.sage   { color: var(--sage); }
+  .eyebrow.accent { color: var(--accent); }
+  .eyebrow.muted  { color: var(--text-secondary); }
+  .eyebrow.warning { color: var(--warning); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 66px; font-weight: 300;
+    line-height: 1.08; letter-spacing: -0.01em;
+  }
+  .hero h1 em { color: var(--accent); }
+  .hero-right { padding-bottom: 8px; }
+  .hero-right p {
+    font-size: 15px; color: var(--text-secondary);
+    line-height: 1.9; margin-bottom: 32px; max-width: 420px;
+  }
+  .hero-right blockquote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style: italic; font-weight: 300;
+    line-height: 1.6; color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding: 16px 24px; background: var(--surface);
+    margin-bottom: 8px;
+  }
+  .hero-right cite {
+    font-size: 11px; color: var(--text-secondary);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    font-style: normal; padding-left: 24px;
+  }
+
+  /* ── CONTENT WARNING BANNER ── */
+  .content-notice {
+    background: #FBF7F3; border-top: 1px solid #E8D5BE;
+    border-bottom: 1px solid #E8D5BE;
+    padding: 16px 56px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .notice-icon { font-size: 16px; flex-shrink: 0; }
+  .notice-text { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+  .notice-text strong { color: var(--warning); font-weight: 500; }
+
+  /* ── JOURNEY FILTER ── */
+  .filter-section {
+    max-width: 1140px; margin: 0 auto;
+    padding: 56px 56px 0;
+  }
+  .filter-intro {
+    font-size: 13px; color: var(--text-secondary);
+    margin-bottom: 20px; letter-spacing: 0.02em;
+  }
+  .journey-filters {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 48px;
+  }
+  .journey-btn {
+    padding: 9px 20px; border: 1px solid var(--surface);
+    background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.06em; cursor: pointer;
+    color: var(--text-secondary); transition: all 0.2s;
+  }
+  .journey-btn:hover { border-color: var(--text-secondary); color: var(--text); }
+  .journey-btn.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  .rule { height: 1px; background: var(--surface); margin: 0 56px; }
+
+  /* ── FEATURED STORY ── */
+  .featured-story {
+    max-width: 1140px; margin: 0 auto;
+    padding: 64px 56px 48px;
+  }
+  .featured-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 500; color: var(--text-secondary); margin-bottom: 36px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .featured-label::after { content: ''; flex: 1; height: 1px; background: var(--surface); }
+  .featured-story-card {
+    background: var(--dark); padding: 56px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: start; cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .featured-story-card:hover { opacity: 0.95; }
+  .featured-story-left { }
+  .story-stage-tag {
+    display: inline-block; font-size: 10px;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 500; padding: 5px 12px; margin-bottom: 22px;
+  }
+  .tag-considering { background: rgba(124,158,143,0.15); color: var(--sage); }
+  .tag-treatment   { background: rgba(155,142,168,0.15); color: var(--accent); }
+  .tag-tww         { background: rgba(155,142,168,0.15); color: var(--accent); }
+  .tag-loss        { background: rgba(42,40,37,0.3);     color: #A09890; }
+  .tag-between     { background: rgba(196,149,106,0.15); color: var(--warning); }
+  .tag-success     { background: rgba(124,158,143,0.15); color: var(--sage); }
+  .tag-partner     { background: rgba(42,40,37,0.3);     color: #A09890; }
+
+  .featured-story-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300; color: #E8E0D5;
+    line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.01em;
+  }
+  .featured-story-card h2 em { color: var(--accent); }
+  .featured-author {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+  }
+  .author-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 17px;
+    color: var(--white); flex-shrink: 0;
+  }
+  .author-info strong { display: block; font-size: 13px; color: #E8E0D5; font-weight: 400; }
+  .author-info span { font-size: 11px; color: #5A5248; }
+  .featured-excerpt {
+    font-size: 15px; color: #8A817A; line-height: 1.85;
+    margin-bottom: 32px; border-left: 2px solid #3A3530;
+    padding-left: 20px; font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-weight: 300;
+  }
+  .read-story-btn {
+    background: var(--accent); color: var(--white);
+    padding: 12px 28px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.08em; transition: opacity 0.2s; display: inline-block;
+  }
+  .read-story-btn:hover { opacity: 0.85; }
+  .featured-story-right { padding-top: 8px; }
+  .story-detail-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: #5A5248; margin-bottom: 12px; font-weight: 500;
+  }
+  .story-chapters { display: flex; flex-direction: column; gap: 0; margin-bottom: 32px; }
+  .story-chapter {
+    padding: 16px 0; border-bottom: 1px solid #3A3530;
+    font-size: 13px; color: #8A817A; cursor: pointer;
+    transition: color 0.2s; display: flex; justify-content: space-between;
+  }
+  .story-chapter:first-child { border-top: 1px solid #3A3530; }
+  .story-chapter:hover { color: #E8E0D5; }
+  .story-chapter span { color: #4A4540; font-size: 11px; }
+  .content-warning-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--warning); background: rgba(196,149,106,0.1);
+    padding: 5px 10px; margin-top: 16px;
+  }
+
+  /* ── STORY GRID ── */
+  .story-grid-section {
+    max-width: 1140px; margin: 0 auto;
+    padding: 16px 56px 80px;
+  }
+  .story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+  .story-card {
+    background: var(--white); border: 1px solid var(--surface);
+    display: flex; flex-direction: column; cursor: pointer;
+    transition: all 0.25s;
+  }
+  .story-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(42,40,37,0.07); }
+  .story-card-top {
+    padding: 28px 28px 0;
+  }
+  .story-card-tags { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .story-card h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; line-height: 1.3;
+    margin-bottom: 14px; transition: color 0.2s;
+  }
+  .story-card:hover h3 { color: var(--accent); }
+  .story-card p {
+    font-size: 13px; color: var(--text-secondary);
+    line-height: 1.8; margin-bottom: 20px;
+  }
+  .story-card-pull {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-style: italic; font-weight: 300;
+    color: var(--text); line-height: 1.6;
+    border-left: 2px solid var(--accent);
+    padding: 12px 18px; margin: 0 28px 20px;
+    background: var(--surface);
+  }
+  .story-card-footer {
+    margin-top: auto; padding: 16px 28px;
+    border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+    align-items: center;
+  }
+  .story-card-author { display: flex; align-items: center; gap: 10px; }
+  .mini-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 13px;
+    color: var(--white); flex-shrink: 0;
+  }
+  .author-name { font-size: 12px; color: var(--text); font-weight: 400; }
+  .author-cycles { font-size: 10px; color: var(--text-secondary); }
+  .read-time { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.04em; }
+  .cw-flag {
+    font-size: 10px; color: var(--warning); letter-spacing: 0.08em;
+    display: flex; align-items: center; gap: 4px;
+  }
+
+  /* ── FULL STORY VIEW ── */
+  .story-view {
+    display: none; max-width: 740px; margin: 0 auto;
+    padding: 64px 56px 88px;
+  }
+  .story-view.visible { display: block; }
+  .back-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    color: var(--text-secondary); letter-spacing: 0.08em;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 48px; padding: 0; transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--accent); }
+  .story-header { margin-bottom: 40px; }
+  .story-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px; font-weight: 300; line-height: 1.1;
+    letter-spacing: -0.01em; margin: 16px 0 28px;
+  }
+  .story-header h1 em { color: var(--accent); }
+  .story-byline {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 0; border-top: 1px solid var(--surface);
+    border-bottom: 1px solid var(--surface);
+  }
+  .byline-avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif; font-size: 20px;
+    color: var(--white); flex-shrink: 0;
+  }
+  .byline-details strong { display: block; font-size: 14px; font-weight: 400; }
+  .byline-details span { font-size: 12px; color: var(--text-secondary); }
+  .cw-box {
+    background: #FBF7F3; border: 1px solid #E8D5BE;
+    padding: 16px 20px; margin: 32px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .cw-box-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+  .cw-box-text { font-size: 13px; color: var(--text-secondary); line-height: 1.7; }
+  .cw-box-text strong { color: var(--warning); font-weight: 500; display: block; margin-bottom: 4px; }
+  .story-body { font-size: 17px; line-height: 1.95; color: var(--text); font-weight: 300; }
+  .story-body p { margin-bottom: 28px; }
+  .story-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    margin: 52px 0 18px; line-height: 1.2;
+  }
+  .story-body blockquote {
+    border-left: 3px solid var(--accent); margin: 40px 0;
+    padding: 20px 28px; background: var(--surface);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-style: italic; font-weight: 300;
+    line-height: 1.6;
+  }
+  .story-body strong { font-weight: 500; }
+  .story-end {
+    margin-top: 56px; padding-top: 32px;
+    border-top: 1px solid var(--surface);
+    text-align: center;
+  }
+  .story-end p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-style: italic; font-weight: 300;
+    color: var(--text-secondary); margin-bottom: 24px;
+  }
+  .story-share { display: flex; gap: 10px; justify-content: center; margin-bottom: 40px; }
+  .share-btn {
+    background: transparent; border: 1px solid var(--surface);
+    padding: 9px 18px; font-family: 'DM Sans', sans-serif;
+    font-size: 11px; letter-spacing: 0.07em; cursor: pointer;
+    color: var(--text-secondary); transition: all 0.2s;
+  }
+  .share-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .story-nav {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px;
+  }
+  .story-nav-btn {
+    padding: 20px; background: var(--surface); cursor: pointer;
+    border: none; text-align: left; transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .story-nav-btn:hover { background: var(--surface-deep); }
+  .story-nav-btn.next { text-align: right; }
+  .story-nav-label { font-size: 10px; color: var(--text-secondary); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .story-nav-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 400; color: var(--text); line-height: 1.3; }
+
+  /* ── SUBMIT YOUR STORY ── */
+  .submit-section {
+    background: var(--dark); padding: 88px 56px;
+  }
+  .submit-inner {
+    max-width: 1140px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: start;
+  }
+  .submit-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 46px; font-weight: 300; color: #E8E0D5;
+    line-height: 1.15; margin: 16px 0 20px;
+  }
+  .submit-left h2 em { color: var(--accent); }
+  .submit-left p { font-size: 14px; color: #7A7268; line-height: 1.85; margin-bottom: 16px; }
+  .submit-points { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+  .submit-point { display: flex; gap: 12px; font-size: 13px; color: #8A817A; align-items: flex-start; }
+  .submit-point-icon { color: var(--accent); flex-shrink: 0; margin-top: 1px; }
+  .submit-form { background: var(--dark-surface); padding: 40px; border: 1px solid #3A3530; }
+  .submit-form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 300; color: #E8E0D5;
+    margin-bottom: 24px;
+  }
+  .form-row { margin-bottom: 16px; }
+  .form-label {
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #5A5248; font-weight: 500; margin-bottom: 6px; display: block;
+  }
+  .form-input {
+    width: 100%; padding: 11px 14px;
+    background: #252320; border: 1px solid #3A3530;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: #E8E0D5; outline: none; transition: border-color 0.2s;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: #4A4540; }
+  .form-textarea {
+    width: 100%; padding: 11px 14px; height: 120px; resize: vertical;
+    background: #252320; border: 1px solid #3A3530;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: #E8E0D5; outline: none; font-weight: 300;
+    transition: border-color 0.2s; line-height: 1.7;
+  }
+  .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea::placeholder { color: #4A4540; }
+  .form-select {
+    width: 100%; padding: 11px 14px;
+    background: #252320; border: 1px solid #3A3530;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    color: #E8E0D5; outline: none; appearance: none; cursor: pointer;
+  }
+  .form-note { font-size: 11px; color: #5A5248; margin-top: 6px; line-height: 1.6; }
+  .form-checkbox-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .form-checkbox { margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+  .form-checkbox-label { font-size: 12px; color: #7A7268; line-height: 1.6; }
+  .btn-submit {
+    background: var(--accent); color: var(--white);
+    padding: 13px 32px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    letter-spacing: 0.08em; transition: opacity 0.2s; margin-top: 8px;
+  }
+  .btn-submit:hover { opacity: 0.85; }
+
+  /* ── YOUR STORY MATTERS strip ── */
+  .matters-strip {
+    background: var(--surface); padding: 72px 56px; text-align: center;
+  }
+  .matters-strip h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 46px; font-weight: 300; margin: 16px 0 16px;
+  }
+  .matters-strip h2 em { color: var(--accent); }
+  .matters-strip p {
+    font-size: 15px; color: var(--text-secondary);
+    max-width: 480px; margin: 0 auto 36px; line-height: 1.85;
+  }
+  .matters-stats {
+    display: flex; gap: 0; justify-content: center;
+    max-width: 600px; margin: 0 auto;
+  }
+  .matters-stat {
+    flex: 1; padding: 28px 24px;
+    border-right: 1px solid var(--surface-deep);
+  }
+  .matters-stat:last-child { border-right: none; }
+  .matters-stat strong {
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; color: var(--text); line-height: 1;
+  }
+  .matters-stat strong em { color: var(--accent); }
+  .matters-stat span { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.07em; margin-top: 6px; display: block; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background: var(--dark); padding: 72px 56px; text-align: center; }
+  .newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; color: #E8E0D5; margin: 16px 0 14px;
+  }
+  .newsletter p { font-size: 14px; color: #7A7268; max-width: 380px; margin: 0 auto 36px; line-height: 1.8; }
+  .nl-row { display: flex; max-width: 400px; margin: 0 auto; }
+  .nl-row input {
+    flex: 1; padding: 13px 16px; border: 1px solid #3A3530;
+    background: #2A2825; color: #E8E0D5;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    outline: none; border-right: none;
+  }
+  .nl-row input:focus { border-color: var(--accent); }
+  .nl-row button {
+    background: var(--accent); color: #fff; padding: 13px 24px;
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; letter-spacing: 0.1em; cursor: pointer;
+    transition: opacity 0.2s; white-space: nowrap;
+  }
+  .nl-row button:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 56px; border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-note { font-size: 12px; color: var(--text-secondary); }
+  .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--text-secondary); }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* util */
+  .index-view { display: block; }
+  .index-view.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wordmark" onclick="window.location.href='index.html'">Long Road To <em>Maybe</em></div>
+  <div class="nav-links">
+    <a href="long-road-to-maybe-blog.html">Blog</a>
+    <a href="long-road-to-maybe-blog.html">Research</a>
+    <a href="long-road-to-maybe-stories.html" class="active">Stories</a>
+    <a href="long-road-to-maybe-resources.html">Resources</a>
+    <a href="long-road-to-maybe-community.html">Community</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('submit-section').scrollIntoView({behavior:'smooth'})">Share your story</button>
+</nav>
+
+<!-- ════════════ INDEX VIEW ════════════ -->
+<div class="index-view" id="index-view">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <p class="eyebrow accent">Every road is different</p>
+      <h1>Real stories<br>from the<br><em>long road</em></h1>
+    </div>
+    <div class="hero-right">
+      <p>These are not statistics. These are people — at every stage, in every outcome — sharing what IVF actually felt like from the inside. Reading someone else's story won't change yours. But it might make you feel less alone in it.</p>
+      <blockquote>"I found this community at 2am after my second negative result. Reading someone else's words made me feel like I could breathe again."</blockquote>
+      <cite>— Community member, Cycle 3</cite>
+    </div>
+  </div>
+
+  <!-- CONTENT NOTICE -->
+  <div class="content-notice">
+    <span class="notice-icon">🌿</span>
+    <p class="notice-text"><strong>A gentle note:</strong> Some stories here involve pregnancy loss, failed cycles, and difficult emotions. Stories that contain these themes are clearly marked. Please take care of yourself — you can filter by stage of journey below, or come back when you're ready.</p>
+  </div>
+
+  <!-- JOURNEY FILTER -->
+  <div class="filter-section">
+    <p class="filter-intro">Filter by stage of journey — find stories from people where you are right now</p>
+    <div class="journey-filters">
+      <button class="journey-btn active" onclick="filterStories('all', this)">All stories</button>
+      <button class="journey-btn" onclick="filterStories('considering', this)">Considering IVF</button>
+      <button class="journey-btn" onclick="filterStories('treatment', this)">During treatment</button>
+      <button class="journey-btn" onclick="filterStories('tww', this)">The two-week wait</button>
+      <button class="journey-btn" onclick="filterStories('loss', this)">After a loss</button>
+      <button class="journey-btn" onclick="filterStories('between', this)">Between cycles</button>
+      <button class="journey-btn" onclick="filterStories('success', this)">Success stories</button>
+      <button class="journey-btn" onclick="filterStories('partner', this)">Partner perspectives</button>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- FEATURED STORY -->
+  <div class="featured-story">
+    <p class="featured-label">Featured story</p>
+    <div class="featured-story-card" onclick="showStory('rachel')">
+      <div class="featured-story-left">
+        <span class="story-stage-tag tag-success">Success story</span>
+        <h2>After three cycles and two years — it <em>actually</em> worked</h2>
+        <div class="featured-author">
+          <div class="author-avatar" style="background:var(--accent)">R</div>
+          <div class="author-info">
+            <strong>RachelP</strong>
+            <span>Shared June 2025 · 12 min read</span>
+          </div>
+        </div>
+        <p class="featured-excerpt">"I have written and deleted the beginning of this post eleven times. I keep trying to find the right way to start, and there isn't one. So I'll just say it: it worked. After everything — it worked."</p>
+        <button class="read-story-btn">Read Rachel's story →</button>
+      </div>
+      <div class="featured-story-right">
+        <p class="story-detail-label">This story covers</p>
+        <div class="story-chapters">
+          <div class="story-chapter">The first consultation <span>Chapter 1</span></div>
+          <div class="story-chapter">Two failed cycles <span>Chapter 2</span></div>
+          <div class="story-chapter">Deciding whether to try again <span>Chapter 3</span></div>
+          <div class="story-chapter">The two-week wait that changed everything <span>Chapter 4</span></div>
+          <div class="story-chapter">What I want you to know <span>Chapter 5</span></div>
+        </div>
+        <div class="content-warning-tag">⚠ Contains references to pregnancy loss</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STORY GRID -->
+  <div class="story-grid-section">
+    <div class="story-grid" id="story-grid">
+
+      <!-- STORY 1 - loss -->
+      <div class="story-card" data-stage="loss" onclick="showStory('claire')">
+        <div class="story-card-top">
+          <div class="story-card-tags">
+            <span class="story-stage-tag tag-loss">After a loss</span>
+            <span class="cw-flag">⚠ CW: loss</span>
+          </div>
+          <h3>The grief that doesn't have a name</h3>
+          <p>What nobody prepared me for was the silence after. The world keeps moving and you're standing completely still.</p>
+        </div>
+        <div class="story-card-pull">"There was no funeral, no card from the office, no language for what I'd lost. But I had lost something. I needed to say that out loud."</div>
+        <div class="story-card-footer">
+          <div class="story-card-author">
+            <div class="mini-avatar" style="background:#7A8FA8">C</div>
+            <div>
+              <p class="author-name">ClaireD</p>
+              <p class="author-cycles">Cycle 2 · Sheffield</p>
+            </div>
+          </div>
+          <span class="read-time">9 min read</span>
+        </div>
+      </div>
+
+      <!-- STORY 2 - partner -->
+      <div class="story-card" data-stage="partner" onclick="showStory('james')">
+        <div class="story-card-top">
+          <div class="story-card-tags">
+            <span class="story-stage-tag tag-partner">Partner perspective</span>
+          </div>
+          <h3>What it's like to watch someone you love go through this</h3>
+          <p>I couldn't take the injections for her. I couldn't make the embryos grow. I had never felt so useless in my life, or so in love.</p>
+        </div>
+        <div class="story-card-pull">"I didn't know how to help. So I googled 'how to support partner through IVF' at midnight and cried at my phone."</div>
+        <div class="story-card-footer">
+          <div class="story-card-author">
+            <div class="mini-avatar" style="background:var(--sage)">J</div>
+            <div>
+              <p class="author-name">JamesT</p>
+              <p class="author-cycles">Partner · Cycle 1–3</p>
+            </div>
+          </div>
+          <span class="read-time">7 min read</span>
+        </div>
+      </div>
+
+      <!-- STORY 3 - considering -->
+      <div class="story-card" data-stage="considering" onclick="showStory('sara')">
+        <div class="story-card-top">
+          <div class="story-card-tags">
+            <span class="story-stage-tag tag-considering">Considering IVF</span>
+          </div>
+          <h3>The moment we decided to try — and everything that came before it</h3>
+          <p>We sat with the idea of IVF for eight months before we said yes. This is what that decision actually looked like from the inside.</p>
+        </div>
+        <div class="story-card-pull">"We weren't ready. But I'm not sure you ever are. At some point you just decide that maybe is better than never."</div>
+        <div class="story-card-footer">
+          <div class="story-card-author">
+            <div class="mini-avatar" style="background:var(--accent)">S</div>
+            <div>
+              <p class="author-name">SaraM</p>
+              <p class="author-cycles">Considering · Manchester</p>
+            </div>
+          </div>
+          <span class="read-time">6 min read</span>
+        </div>
+      </div>
+
+      <!-- STORY 4 - tww -->
+      <div class="story-card" data-stage="tww" onclick="showStory('anna')">
+        <div class="story-card-top">
+          <div class="story-card-tags">
+            <span class="story-stage-tag tag-tww">Two-week wait</span>
+          </div>
+          <h3>Fourteen days in which time stopped making sense</h3>
+          <p>I have never watched a clock the way I watched it during the TWW. I documented every hour of it. Here's what that was like.</p>
+        </div>
+        <div class="story-card-pull">"I googled my symptoms 47 times. I counted. Every single result told me something different. I put my phone in a drawer on day 9."</div>
+        <div class="story-card-footer">
+          <div class="story-card-author">
+            <div class="mini-avatar" style="background:#8F9E7C">A</div>
+            <div>
+              <p class="author-name">AnnaB</p>
+              <p class="author-cycles">Cycle 1 · London</p>
+            </div>
+          </div>
+          <span class="read-time">10 min read</span>
+        </div>
+      </div>
+
+      <!-- STORY 5 - between -->
+      <div class="story-card" data-stage="between" onclick="showStory('tara')">
+        <div class="story-card-top">
+          <div class="story-card-tags">
+            <span class="story-stage-tag tag-between">Between cycles</span>
+            <span class="cw-flag">⚠ CW: loss</span>
+          </div>
+          <h3>The strange limbo of waiting to try again</h3>
+          <p>Between my second and third cycle there were five months. I didn't know what to do with myself. This is what I learned in that space.</p>
+        </div>
+        <div class="story-card-pull">"Recovery isn't linear. Some days I was fine. Some days I cried in the supermarket because someone else had a bump."</div>
+        <div class="story-card-footer">
+          <div class="story-card-author">
+            <div class="mini-avatar" style="background:var(--warning)">T</div>
+            <div>
+              <p class="author-name">TaraW</p>
+              <p class="author-cycles">Cycle 2–3 · Edinburgh</p>
+            </div>
+          </div>
+          <span class="read-time">11 min read</span>
+        </div>
+      </div>
+
+      <!-- STORY 6 - treatment -->
+      <div class="story-card" data-stage="treatment" onclick="showStory('beth')">
+        <div class="story-card-top">
+          <div class="story-card-tags">
+            <span class="story-stage-tag tag-treatment">During treatment</span>
+          </div>
+          <h3>I did my first injection alone in a work bathroom and somehow that was fine</h3>
+          <p>The first injection felt enormous before it happened and then just... small. Normal. This is what the stimulation phase was actually like, hour by hour.</p>
+        </div>
+        <div class="story-card-pull">"I'd built it up so much in my head. And then I just did it. And then I ordered a sandwich. Life is strange."</div>
+        <div class="story-card-footer">
+          <div class="story-card-author">
+            <div class="mini-avatar" style="background:var(--sage)">B</div>
+            <div>
+              <p class="author-name">BethW</p>
+              <p class="author-cycles">Cycle 1 · Bristol</p>
+            </div>
+          </div>
+          <span class="read-time">8 min read</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LOAD MORE -->
+    <div style="text-align:center;padding-top:48px">
+      <button style="background:transparent;border:1px solid var(--surface);padding:13px 36px;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.06em;cursor:pointer;color:var(--text-secondary);transition:all 0.2s" onmouseover="this.style.borderColor='var(--text)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='var(--surface)';this.style.color='var(--text-secondary)'">
+        Load more stories
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<!-- ════════════ END INDEX VIEW ════════════ -->
+
+
+<!-- ════════════ STORY VIEW ════════════ -->
+<div class="story-view" id="story-view">
+  <button class="back-btn" onclick="showIndex()">← Back to stories</button>
+  <div id="story-content"></div>
+</div>
+<!-- ════════════ END STORY VIEW ════════════ -->
+
+
+<!-- SUBMIT YOUR STORY -->
+<section class="submit-section" id="submit-section">
+  <div class="submit-inner">
+    <div class="submit-left">
+      <p class="eyebrow accent">Your story matters</p>
+      <h2>Share what your<br>road has looked <em>like</em></h2>
+      <p>Every story on this page was submitted by someone who decided their experience was worth sharing — not because it was inspiring or had a happy ending, but because it was real.</p>
+      <p>You don't need to have a resolution. You don't need to be okay. You just need to have lived it.</p>
+      <div class="submit-points">
+        <div class="submit-point"><span class="submit-point-icon">✦</span> You choose your name — real or a nickname, entirely up to you</div>
+        <div class="submit-point"><span class="submit-point-icon">✦</span> We read every submission and respond personally</div>
+        <div class="submit-point"><span class="submit-point-icon">✦</span> Nothing is published without your explicit sign-off</div>
+        <div class="submit-point"><span class="submit-point-icon">✦</span> You can ask to remain anonymous at any point</div>
+        <div class="submit-point"><span class="submit-point-icon">✦</span> Partial stories are welcome — you don't have to have reached the end</div>
+      </div>
+    </div>
+    <div class="submit-form" id="submit-form-area">
+      <p class="submit-form-title">Tell us your story</p>
+      <div class="form-row">
+        <label class="form-label">Your name or nickname</label>
+        <input type="text" class="form-input" placeholder="What would you like to be called?" id="story-name" />
+      </div>
+      <div class="form-row">
+        <label class="form-label">Stage of your journey</label>
+        <select class="form-select" id="story-stage">
+          <option value="">Select the stage that fits best...</option>
+          <option>Considering IVF</option>
+          <option>Preparing to start</option>
+          <option>Currently in treatment</option>
+          <option>In the two-week wait</option>
+          <option>After a negative result</option>
+          <option>After a loss</option>
+          <option>Between cycles</option>
+          <option>After a positive result</option>
+          <option>Partner or supporter</option>
+          <option>My journey is complete</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Your story</label>
+        <textarea class="form-textarea" id="story-text" placeholder="Write as much or as little as you'd like. It doesn't have to be perfect — it just has to be yours." style="height:160px"></textarea>
+        <p class="form-note">You can also email a longer piece to stories@longroadtomaybe.com — we're happy to work with you on it.</p>
+      </div>
+      <div class="form-row">
+        <label class="form-label">Email address (not published)</label>
+        <input type="email" class="form-input" placeholder="So we can be in touch before publishing" id="story-email" />
+      </div>
+      <div class="form-row" style="margin-top:8px">
+        <div class="form-checkbox-row">
+          <input type="checkbox" class="form-checkbox" id="cw-check" />
+          <label class="form-checkbox-label" for="cw-check">My story contains references to pregnancy loss or failed cycles — please add a content warning</label>
+        </div>
+        <div class="form-checkbox-row">
+          <input type="checkbox" class="form-checkbox" id="anon-check" />
+          <label class="form-checkbox-label" for="anon-check">I'd like to remain fully anonymous — please don't include any location or identifying details</label>
+        </div>
+      </div>
+      <button class="btn-submit" onclick="submitStory()">Submit my story</button>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR STORY MATTERS STATS -->
+<section class="matters-strip">
+  <p class="eyebrow muted">The community in numbers</p>
+  <h2>Stories that have made someone feel <em>less alone</em></h2>
+  <p>Every number here is a person who decided to share. Every reader who found comfort in a story they recognised.</p>
+  <div class="matters-stats">
+    <div class="matters-stat"><strong>4<em>8</em></strong><span>Stories shared</span></div>
+    <div class="matters-stat"><strong>12<em>k</em></strong><span>Stories read</span></div>
+    <div class="matters-stat"><strong>100<em>%</em></strong><span>Submitted voluntarily</span></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="eyebrow accent">Monthly newsletter</p>
+  <h2>A new story every month</h2>
+  <p>One email a month — a featured story, new research, and something useful. No noise.</p>
+  <div class="nl-row">
+    <input type="email" placeholder="your@email.com" />
+    <button>Join us</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wordmark" onclick="window.location.href='index.html'" style="cursor:pointer">Long Road To <em>Maybe</em></div>
+  <p class="footer-note">Built with care, by someone who's been there.</p>
+  <div class="footer-links">
+    <a href="index.html">About</a>
+    <a href="index.html">Privacy</a>
+    <a href="index.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // ── STORY CONTENT ──
+  const stories = {
+    rachel: {
+      stage: 'Success story', stageClass: 'tag-success',
+      title: "After three cycles and two years — it <em>actually</em> worked",
+      name: 'RachelP', color: 'var(--accent)',
+      date: 'June 2025', readTime: '12 min read',
+      hasWarning: true, warningText: 'This story contains references to two failed IVF cycles and early pregnancy loss.',
+      body: `
+        <p>I have written and deleted the beginning of this post eleven times. I keep trying to find the right way to start, and there isn't one. So I'll just say it: it worked. After three cycles, two years, two losses, and more moments than I can count where I genuinely wasn't sure I could keep going — it worked.</p>
+        <p>I'm writing this at twenty-two weeks. I still don't entirely believe it.</p>
+        <h2>How it started</h2>
+        <p>We began the IVF process after two years of trying naturally. Our diagnosis was unexplained infertility, which sounds almost polite — like a shrug. We couldn't find anything wrong. Which also meant we couldn't fix anything. We were just waiting for something that wasn't coming.</p>
+        <p>Our first consultation felt like being handed a manual for a machine I didn't understand, in a language I didn't speak. I wrote down words like AMH and AFC and AFC and antral follicle count and looked them all up in the car park afterwards.</p>
+        <blockquote>"Nobody tells you that the information itself is a kind of grief — learning the language of the thing you hoped you'd never need to know."</blockquote>
+        <h2>Cycles one and two</h2>
+        <p>Cycle one ended in a positive test and a loss at six weeks. The clinic called it a chemical pregnancy, which is a clinical term I have complicated feelings about. We were devastated in the specific way you can only be when you've allowed yourself to hope.</p>
+        <p>Cycle two gave us three blasts. We transferred one. It didn't implant. We transferred the second. It did, briefly, and then didn't. We had one left. I went home and sat on the bathroom floor for a long time.</p>
+        <h2>Deciding whether to continue</h2>
+        <p>The decision to try a third time wasn't straightforward. We talked about it for weeks — what it would cost us financially, physically, emotionally. Whether we had any more of ourselves left to give to it. My husband said, quietly, that he would follow whatever I decided. That kindness almost broke me.</p>
+        <p>I decided yes. Not because I was certain it would work. But because I knew I would always wonder if I didn't try.</p>
+        <h2>Cycle three</h2>
+        <p>We changed our protocol. New medication, different timing, more monitoring. I tried not to read anything into any of it. We got two blasts from this cycle. We transferred one.</p>
+        <p>The two-week wait was the longest of my life. I tested on day ten. There was a line. A faint, unmistakeable line. I sat on the bathroom floor again — same floor, completely different reason.</p>
+        <h2>What I want you to know</h2>
+        <p>I can't promise this will work for you. I know that's the thing you most want someone to say, and I can't say it honestly. What I can tell you is that I'm here, twenty-two weeks in, proof that the road isn't always endless. Sometimes it does lead somewhere.</p>
+        <p>And if you're in the middle of it right now — in the waiting, in the grief, in the not knowing — I see you. I was you, not very long ago. You're not alone on this road.</p>
+      `
+    },
+    claire: {
+      stage: 'After a loss', stageClass: 'tag-loss',
+      title: "The grief that doesn't have a name",
+      name: 'ClaireD', color: '#7A8FA8',
+      date: 'April 2025', readTime: '9 min read',
+      hasWarning: true, warningText: 'This story contains references to IVF loss and the emotional aftermath of a failed cycle.',
+      body: `
+        <p>When people ask how I am, I say fine. I say it quickly and I mean it as a way of closing the conversation, because the honest answer would take too long and probably make them uncomfortable.</p>
+        <p>The honest answer is: I don't know what I lost, exactly, but I lost something, and the world doesn't have a word for it.</p>
+        <h2>The specific strangeness of this grief</h2>
+        <p>Pregnancy loss has a language now — more than it used to. People are beginning to talk about miscarriage with something closer to the honesty it deserves. But IVF loss exists in a different category, and I'm not sure it has language yet.</p>
+        <blockquote>"There was no funeral. No card from the office. No casserole on the doorstep. The world didn't know there was anything to mourn."</blockquote>
+        <p>What I was mourning was the possibility. The almost. The embryo that made it to day five and then didn't make it further. The idea of a person that existed in my head fully formed, with a name I'd half-chosen, and then didn't exist anymore.</p>
+        <h2>What I needed that I didn't get</h2>
+        <p>I needed someone to tell me that what I felt was proportionate. That it was allowed to be as large as it was. Instead, the emphasis was immediately on next steps — what the results showed, what we'd do differently, when we could start again.</p>
+        <p>Forward motion is useful, eventually. But first I needed to stand still for a moment. I needed the grief to be witnessed.</p>
+        <h2>What helped</h2>
+        <p>Finding this community helped. Reading other people's words and recognising myself in them — that helped more than I can say. Not because it made the loss smaller, but because it made me feel less like I was inventing something that no one else understood.</p>
+        <p>If you're in this right now: what you feel is real. What you lost was real. You're allowed to take as long as you need.</p>
+      `
+    },
+    james: {
+      stage: 'Partner perspective', stageClass: 'tag-partner',
+      title: "What it's like to watch someone you love go through this",
+      name: 'JamesT', color: 'var(--sage)',
+      date: 'March 2025', readTime: '7 min read',
+      hasWarning: false, warningText: '',
+      body: `
+        <p>I want to start by saying that this is not my story. It is my wife's story, and she has given me permission to tell my small part of it — the view from the side, which is its own strange place to stand.</p>
+        <p>I could not take the injections for her. I could not make the follicles grow. I could not do anything except be there, and there were many days when being there felt like nowhere near enough.</p>
+        <h2>The particular helplessness of loving someone through IVF</h2>
+        <p>I am someone who solves problems. I research things, I make plans, I find options. IVF removed all of that from me. There was nothing to research that would change the outcome. There was no plan I could make that would help the embryo implant.</p>
+        <blockquote>"I googled 'how to support partner through IVF' at midnight and cried at my phone. Not because the answers were bad. Because I'd needed to google it."</blockquote>
+        <p>What I learned, slowly and imperfectly, was that being useful and being present are not the same thing. I could not fix this. But I could sit with her in it. And that turned out to matter more than I'd expected.</p>
+        <h2>What I wish someone had told me</h2>
+        <p>Your feelings are real and they are also not the point right now. That sounds harsh. I mean it gently. The person going through this physically is carrying something enormous, and your job in this season is to be strong enough to hold some of the emotional weight — not to add your own to the pile.</p>
+        <p>Find somewhere to put your feelings. A friend, a therapist, a long run, a journal. Not your partner, not right now.</p>
+        <p>And show up. In whatever small way you can, every day, show up. That is enough. That is everything.</p>
+      `
+    },
+    sara: {
+      stage: 'Considering IVF', stageClass: 'tag-considering',
+      title: "The moment we decided to try — and everything that came before it",
+      name: 'SaraM', color: 'var(--accent)',
+      date: 'February 2025', readTime: '6 min read',
+      hasWarning: false, warningText: '',
+      body: `
+        <p>We sat with the idea of IVF for eight months before we said yes. Eight months of conversations that started and stopped, of online research at odd hours, of looking at each other across dinner and not quite saying the thing we were both thinking.</p>
+        <p>This is the story of that decision — not the treatment, just the before. Because I think the before matters, and I don't see it talked about very much.</p>
+        <h2>What held us back</h2>
+        <p>Fear, mostly. Fear of what it would do to our relationship, to our bodies, to our finances, to our hope. Hope is a fragile thing when you've already spent two years watching it not quite materialise. The idea of putting it through something as concentrated as IVF felt terrifying.</p>
+        <blockquote>"We weren't ready. But I'm not sure you ever are. At some point you just decide that maybe is better than never."</blockquote>
+        <p>We were also afraid of what it would mean if it didn't work. Closing a door. Choosing a different life than the one we'd imagined. That fear was so big we could barely look at it directly.</p>
+        <h2>What made us say yes</h2>
+        <p>We talked to a couple who'd been through it. Not a success story — a story that hadn't ended the way they hoped, but that they'd survived. They said: you will be okay whatever happens. We didn't believe them entirely. But we believed them enough.</p>
+        <p>If you're in the decision-making phase right now — take your time. This is yours to decide, on your timeline. The right answer is the one you can live with.</p>
+      `
+    },
+    anna: {
+      stage: 'Two-week wait', stageClass: 'tag-tww',
+      title: "Fourteen days in which time stopped making sense",
+      name: 'AnnaB', color: '#8F9E7C',
+      date: 'January 2025', readTime: '10 min read',
+      hasWarning: false, warningText: '',
+      body: `
+        <p>I kept a diary during the two-week wait. I did not plan to. I started because I needed somewhere to put the thoughts that were happening too fast to manage, and I kept going because stopping felt like it might jinx something.</p>
+        <p>Here is some of what I wrote.</p>
+        <h2>Day 3</h2>
+        <p>Every twinge feels significant. I know it's the progesterone. I know. And yet. I've already googled "implantation cramps day 3" four times. The results are not consistent.</p>
+        <h2>Day 6</h2>
+        <p>I put my phone in a drawer. I took it out again. I put it in a different drawer. I went for a walk. A woman walked past me with a newborn and I burst into tears on a public pavement, which I think was disproportionate, but also probably not.</p>
+        <blockquote>"I googled my symptoms 47 times. I counted. Every result told me something different. I put my phone in a drawer on day 9. I lasted four hours."</blockquote>
+        <h2>Day 10</h2>
+        <p>I tested. I had told myself I wouldn't. I had genuinely intended not to. The line was very, very faint. I took seven more photos of it in different lights and sent them all to my sister asking if she could see what I could see. She could.</p>
+        <h2>Day 14</h2>
+        <p>Official test day. The line was not faint. I called the clinic and cried on the phone to a nurse who said, very kindly, that she heard this a lot and it never got old.</p>
+        <p>If you're in the wait right now: it is exactly as hard as it feels. You're not being dramatic. Fourteen days when everything you want is riding on something invisible is genuinely one of the stranger experiences a human being can have. You're doing well just by getting through it.</p>
+      `
+    }
+  };
+
+  // ── SHOW STORY ──
+  function showStory(id) {
+    const s = stories[id];
+    if (!s) return;
+    const warningHtml = s.hasWarning ? `
+      <div class="cw-box">
+        <span class="cw-box-icon">🌿</span>
+        <div class="cw-box-text">
+          <strong>Content note</strong>
+          ${s.warningText} Please take care of yourself.
+        </div>
+      </div>` : '';
+    document.getElementById('story-content').innerHTML = `
+      <div class="story-header">
+        <span class="story-stage-tag ${s.stageClass}">${s.stage}</span>
+        <h1>${s.title}</h1>
+        <div class="story-byline">
+          <div class="byline-avatar" style="background:${s.color}">${s.name[0]}</div>
+          <div class="byline-details">
+            <strong>${s.name}</strong>
+            <span>${s.date} &nbsp;·&nbsp; ${s.readTime}</span>
+          </div>
+        </div>
+        ${warningHtml}
+      </div>
+      <div class="story-body">${s.body}</div>
+      <div class="story-end">
+        <p>Thank you for reading this story.</p>
+        <div class="story-share">
+          <button class="share-btn" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)">Copy link</button>
+          <button class="share-btn">Share via email</button>
+        </div>
+        <div class="story-nav">
+          <button class="story-nav-btn" onclick="showIndex()">
+            <p class="story-nav-label">← Back to</p>
+            <p class="story-nav-title">All stories</p>
+          </button>
+          <button class="story-nav-btn next" onclick="document.getElementById('submit-section').scrollIntoView({behavior:'smooth'});showIndex()">
+            <p class="story-nav-label">Share yours →</p>
+            <p class="story-nav-title">Tell us your story</p>
+          </button>
+        </div>
+      </div>`;
+    document.getElementById('index-view').classList.add('hidden');
+    document.getElementById('story-view').classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showIndex() {
+    document.getElementById('story-view').classList.remove('visible');
+    document.getElementById('index-view').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── FILTER ──
+  function filterStories(stage, btn) {
+    document.querySelectorAll('.journey-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.story-card').forEach(card => {
+      const show = stage === 'all' || card.dataset.stage === stage;
+      card.style.display = show ? 'flex' : 'none';
+    });
+  }
+
+  // ── SUBMIT STORY ──
+  function submitStory() {
+    const name = document.getElementById('story-name').value.trim();
+    const text = document.getElementById('story-text').value.trim();
+    const email = document.getElementById('story-email').value.trim();
+    if (!name || !text || !email.includes('@')) {
+      if (!name) document.getElementById('story-name').style.borderColor = 'var(--accent)';
+      if (!text) document.getElementById('story-text').style.borderColor = 'var(--accent)';
+      if (!email.includes('@')) document.getElementById('story-email').style.borderColor = 'var(--accent)';
+      return;
+    }
+    document.getElementById('submit-form-area').innerHTML = `
+      <div style="text-align:center;padding:40px 20px">
+        <p style="font-size:48px;margin-bottom:20px">✦</p>
+        <p class="submit-form-title" style="color:#E8E0D5;margin-bottom:14px">Thank you, ${name}</p>
+        <p style="font-size:13px;color:#7A7268;line-height:1.85;margin-bottom:0">We've received your story and someone from our team will be in touch at ${email} before anything is published. Nothing goes live without your sign-off.</p>
+      </div>`;
+  }
+</script>
+</body>
+</html>
