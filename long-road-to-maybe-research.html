@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Research — Long Road To Maybe</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:             #F6F4F1;
+    --text:           #2A2825;
+    --text-secondary: #6B6560;
+    --accent:         #9B8EA8;
+    --sage:           #7C9E8F;
+    --surface:        #EDE9E3;
+    --surface-deep:   #E2DDD6;
+    --dark:           #1E1C1A;
+    --dark-surface:   #2E2B28;
+    --white:          #FFFFFF;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--text);
+    font-weight: 300; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { text-decoration: none; color: inherit; transition: color 0.25s; }
+  em { font-style: italic; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 300;
+    background: var(--bg); border-bottom: 1px solid var(--surface);
+    padding: 20px 56px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .wordmark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px; font-weight: 400;
+    letter-spacing: 0.02em; white-space: nowrap; cursor: pointer;
+  }
+  .wordmark em { color: var(--accent); font-weight: 300; }
+  .nav-links { display: flex; gap: 36px; font-size: 13px; letter-spacing: 0.06em; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a.active { color: var(--sage); border-bottom: 1px solid var(--sage); padding-bottom: 2px; }
+  .nav-cta {
+    background: var(--text); color: var(--bg);
+    padding: 10px 24px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.1em; transition: background 0.25s;
+  }
+  .nav-cta:hover { background: var(--sage); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--dark);
+    padding: 88px 56px 80px;
+  }
+  .hero-inner {
+    max-width: 1140px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 88px; align-items: center;
+  }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.22em;
+    text-transform: uppercase; font-weight: 500; margin-bottom: 22px;
+  }
+  .eyebrow.sage   { color: var(--sage); }
+  .eyebrow.accent { color: var(--accent); }
+  .eyebrow.muted  { color: var(--text-secondary); }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 62px; font-weight: 300;
+    line-height: 1.08; color: #E8E0D5;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 em { color: var(--sage); }
+  .hero-right p {
+    font-size: 15px; color: #8A817A;
+    line-height: 1.9; margin-bottom: 28px;
+  }
+  .hero-promise {
+    border-left: 3px solid var(--sage);
+    padding: 18px 24px; background: var(--dark-surface);
+    font-size: 13px; color: #8A817A; line-height: 1.75;
+  }
+  .hero-promise strong { color: #E8E0D5; font-weight: 400; display: block; margin-bottom: 6px; font-size: 14px; }
+
+  /* ── STATS ── */
+  .stats-bar {
+    background: var(--sage); padding: 28px 56px;
+    display: flex; gap: 0;
+  }
+  .stat-item {
+    flex: 1; text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    padding: 0 24px;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item strong {
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300; color: var(--white); line-height: 1;
+  }
+  .stat-item span { font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 0.1em; margin-top: 6px; display: block; text-transform: uppercase; }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    max-width: 1140px; margin: 0 auto;
+    padding: 56px 56px 0;
+  }
+  .search-bar {
+    display: flex; align-items: center;
+    border: 1px solid var(--surface-deep); background: var(--white);
+    max-width: 560px; transition: border-color 0.25s;
+  }
+  .search-bar:focus-within { border-color: var(--sage); }
+  .search-icon { padding: 0 16px; color: var(--text-secondary); font-size: 16px; }
+  .search-bar input {
+    flex: 1; padding: 14px 0; border: none; outline: none;
+    background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 300; color: var(--text);
+  }
+  .search-bar input::placeholder { color: var(--text-secondary); }
+  .search-clear {
+    padding: 0 16px; color: var(--text-secondary);
+    cursor: pointer; font-size: 18px; display: none;
+  }
+  .search-clear:hover { color: var(--text); }
+
+  .rule { height: 1px; background: var(--surface); margin: 48px 56px 0; }
+
+  /* ── LAYOUT ── */
+  .research-layout {
+    max-width: 1140px; margin: 0 auto;
+    padding: 56px 56px 88px;
+    display: grid; grid-template-columns: 220px 1fr;
+    gap: 64px; align-items: start;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar { position: sticky; top: 88px; }
+  .sidebar-section { margin-bottom: 36px; }
+  .sidebar-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 500; color: var(--text-secondary); margin-bottom: 14px;
+  }
+  .sidebar-filters { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-btn {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 9px 12px; background: transparent; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    font-weight: 300; color: var(--text-secondary); cursor: pointer;
+    text-align: left; transition: all 0.2s; border-radius: 2px;
+  }
+  .sidebar-btn:hover { background: var(--surface); color: var(--text); }
+  .sidebar-btn.active { background: var(--sage); color: var(--white); font-weight: 400; }
+  .sidebar-btn .count { font-size: 11px; opacity: 0.6; }
+  .sidebar-btn.active .count { opacity: 0.8; }
+  .sidebar-divider { height: 1px; background: var(--surface); margin: 6px 0; }
+
+  /* ── MAIN ── */
+  .main-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 36px;
+  }
+  .main-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 300;
+  }
+  .result-count { font-size: 12px; color: var(--text-secondary); letter-spacing: 0.06em; }
+
+  /* ── PINNED ── */
+  .pinned-article {
+    background: var(--dark); padding: 40px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: center; margin-bottom: 40px;
+    position: relative; overflow: hidden;
+  }
+  .pinned-article::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; background: var(--sage);
+  }
+  .pinned-badge {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; color: var(--sage); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .pinned-badge::before { content: '★'; font-size: 9px; }
+  .pinned-article h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 300; color: #E8E0D5;
+    line-height: 1.25; margin-bottom: 10px;
+  }
+  .pinned-article p { font-size: 13px; color: #7A7268; line-height: 1.7; }
+  .pinned-meta { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-pill {
+    font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 4px 10px; background: var(--dark-surface); color: #8A817A;
+  }
+  .btn-read {
+    background: var(--sage); color: var(--white);
+    padding: 12px 24px; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    letter-spacing: 0.08em; white-space: nowrap;
+    transition: opacity 0.2s; display: flex; align-items: center; gap: 8px;
+  }
+  .btn-read:hover { opacity: 0.85; }
+
+  /* ── ARTICLE CARDS ── */
+  .article-list { display: flex; flex-direction: column; gap: 0; }
+  .article-item {
+    padding: 28px 0; border-bottom: 1px solid var(--surface);
+    cursor: pointer; transition: all 0.2s; display: grid;
+    grid-template-columns: 1fr auto; gap: 24px; align-items: start;
+  }
+  .article-item:first-child { border-top: 1px solid var(--surface); }
+  .article-item:hover { background: var(--surface); margin: 0 -20px; padding: 28px 20px; }
+  .article-item:hover .article-title { color: var(--sage); }
+  .article-category {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 10px;
+  }
+  .cat-clinical    { color: var(--sage); }
+  .cat-treatment   { color: var(--accent); }
+  .cat-medication  { color: var(--sage); }
+  .cat-wellbeing   { color: var(--accent); }
+  .cat-glossary    { color: var(--text-secondary); }
+  .cat-study       { color: var(--sage); }
+  .article-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; line-height: 1.3;
+    margin-bottom: 10px; transition: color 0.2s;
+  }
+  .article-excerpt { font-size: 13px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px; }
+  .article-meta { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.04em; display: flex; gap: 14px; }
+  .article-meta span::before { content: '·'; margin-right: 14px; }
+  .article-meta span:first-child::before { content: ''; margin: 0; }
+  .article-right { text-align: right; padding-top: 4px; flex-shrink: 0; }
+  .article-read-time { font-size: 11px; color: var(--text-secondary); white-space: nowrap; margin-bottom: 8px; }
+  .new-badge {
+    font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--sage); color: var(--white); padding: 2px 7px; font-weight: 500;
+  }
+
+  /* ── ARTICLE VIEW ── */
+  .article-view {
+    display: none; max-width: 740px; margin: 0 auto;
+    padding: 64px 56px 88px;
+  }
+  .article-view.visible { display: block; }
+  .back-btn {
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    color: var(--text-secondary); letter-spacing: 0.08em;
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 48px; padding: 0; transition: color 0.2s;
+  }
+  .back-btn:hover { color: var(--sage); }
+  .article-header { margin-bottom: 40px; }
+  .article-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 50px; font-weight: 300; line-height: 1.1;
+    letter-spacing: -0.01em; margin: 16px 0 24px;
+  }
+  .article-header h1 em { color: var(--sage); }
+  .article-byline {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 0; border-top: 1px solid var(--surface);
+    border-bottom: 1px solid var(--surface);
+  }
+  .byline-icon {
+    width: 44px; height: 44px; background: rgba(124,158,143,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .byline-text strong { display: block; font-size: 13px; font-weight: 400; }
+  .byline-text span { font-size: 12px; color: var(--text-secondary); }
+  .key-findings {
+    background: var(--surface); padding: 28px 32px; margin: 36px 0;
+    border-left: 3px solid var(--sage);
+  }
+  .key-findings-title {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; color: var(--sage); margin-bottom: 16px;
+  }
+  .finding-list { display: flex; flex-direction: column; gap: 10px; }
+  .finding-item { display: flex; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.6; }
+  .finding-item::before { content: '→'; color: var(--sage); flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+  .article-body { font-size: 17px; line-height: 1.95; font-weight: 300; }
+  .article-body p { margin-bottom: 28px; }
+  .article-body h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 400;
+    margin: 52px 0 18px; line-height: 1.2;
+  }
+  .article-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400; margin: 32px 0 12px;
+  }
+  .article-body blockquote {
+    border-left: 3px solid var(--sage); margin: 40px 0;
+    padding: 20px 28px; background: var(--surface);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style: italic; font-weight: 300; line-height: 1.6;
+  }
+  .article-body strong { font-weight: 500; }
+  .article-body a { color: var(--sage); border-bottom: 1px solid rgba(124,158,143,0.3); padding-bottom: 1px; }
+  .article-body a:hover { border-color: var(--sage); }
+  .plain-english-box {
+    background: rgba(124,158,143,0.08); border: 1px solid rgba(124,158,143,0.2);
+    padding: 24px 28px; margin: 36px 0;
+  }
+  .plain-english-title {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; color: var(--sage); margin-bottom: 12px;
+  }
+  .plain-english-box p { font-size: 15px; color: var(--text); line-height: 1.8; margin: 0; }
+  .ask-clinic-box {
+    background: var(--dark); padding: 28px 32px; margin: 40px 0;
+  }
+  .ask-clinic-title {
+    font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+    font-weight: 500; color: var(--accent); margin-bottom: 16px;
+  }
+  .clinic-questions { display: flex; flex-direction: column; gap: 8px; }
+  .clinic-q { font-size: 14px; color: #C4BDB5; line-height: 1.6; display: flex; gap: 10px; }
+  .clinic-q::before { content: '?'; color: var(--accent); flex-shrink: 0; font-weight: 500; }
+  .article-source {
+    margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--surface);
+    font-size: 12px; color: var(--text-secondary); line-height: 1.7;
+  }
+  .article-source strong { color: var(--text); font-weight: 400; display: block; margin-bottom: 6px; }
+  .article-tags { margin-top: 28px; display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag-pill {
+    padding: 5px 14px; font-size: 11px; letter-spacing: 0.06em;
+    background: var(--surface); color: var(--text-secondary); cursor: pointer; transition: all 0.2s;
+  }
+  .tag-pill:hover { background: var(--text); color: var(--bg); }
+  .article-share { margin-top: 40px; padding: 28px 32px; background: var(--surface); }
+  .article-share p { font-size: 11px; color: var(--text-secondary); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+  .share-btns { display: flex; gap: 10px; }
+  .share-btn {
+    padding: 9px 18px; border: 1px solid var(--surface-deep);
+    background: var(--bg); font-family: 'DM Sans', sans-serif;
+    font-size: 11px; letter-spacing: 0.06em; cursor: pointer;
+    color: var(--text); transition: all 0.2s;
+  }
+  .share-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+
+  /* ── GLOSSARY SECTION ── */
+  .glossary-section {
+    background: var(--surface); padding: 80px 56px;
+  }
+  .glossary-inner { max-width: 1140px; margin: 0 auto; }
+  .glossary-header {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 64px; align-items: end; margin-bottom: 48px;
+  }
+  .glossary-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; line-height: 1.15;
+  }
+  .glossary-header h2 em { color: var(--sage); }
+  .glossary-header p { font-size: 14px; color: var(--text-secondary); line-height: 1.85; }
+  .alpha-filter { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 32px; }
+  .alpha-btn {
+    width: 32px; height: 32px; border: 1px solid var(--surface-deep);
+    background: transparent; font-family: 'DM Sans', sans-serif;
+    font-size: 12px; cursor: pointer; color: var(--text-secondary); transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .alpha-btn:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .alpha-btn.active { background: var(--sage); color: var(--white); border-color: var(--sage); }
+  .glossary-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .glossary-card {
+    background: var(--white); padding: 22px 24px;
+    border-left: 3px solid var(--sage);
+  }
+  .glossary-term {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 400; margin-bottom: 6px;
+  }
+  .glossary-abbr { font-size: 11px; color: var(--sage); letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 500; }
+  .glossary-def { font-size: 13px; color: var(--text-secondary); line-height: 1.75; }
+
+  /* ── SUGGEST TOPIC ── */
+  .suggest-strip {
+    padding: 72px 56px; max-width: 1140px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+  }
+  .suggest-strip h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 300; margin-bottom: 12px;
+  }
+  .suggest-strip h2 em { color: var(--sage); }
+  .suggest-strip p { font-size: 14px; color: var(--text-secondary); line-height: 1.85; }
+  .suggest-form { display: flex; gap: 0; }
+  .suggest-form input {
+    flex: 1; padding: 13px 16px; border: 1px solid var(--surface-deep);
+    border-right: none; background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text); outline: none;
+  }
+  .suggest-form input:focus { border-color: var(--sage); }
+  .suggest-form button {
+    background: var(--sage); color: var(--white); padding: 13px 22px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.08em;
+    cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+  }
+  .suggest-form button:hover { opacity: 0.85; }
+
+  /* ── NEWSLETTER ── */
+  .newsletter { background: var(--dark); padding: 72px 56px; text-align: center; }
+  .newsletter h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 300; color: #E8E0D5; margin: 16px 0 14px;
+  }
+  .newsletter p { font-size: 14px; color: #7A7268; max-width: 380px; margin: 0 auto 36px; line-height: 1.8; }
+  .nl-row { display: flex; max-width: 400px; margin: 0 auto; }
+  .nl-row input {
+    flex: 1; padding: 13px 16px; border: 1px solid #3A3530;
+    background: #2A2825; color: #E8E0D5;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; border-right: none;
+  }
+  .nl-row input:focus { border-color: var(--sage); }
+  .nl-row button {
+    background: var(--sage); color: var(--white); padding: 13px 24px; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 12px; letter-spacing: 0.1em;
+    cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+  }
+  .nl-row button:hover { opacity: 0.85; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 36px 56px; border-top: 1px solid var(--surface);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-note { font-size: 12px; color: var(--text-secondary); }
+  .footer-links { display: flex; gap: 24px; font-size: 12px; color: var(--text-secondary); }
+  .footer-links a:hover { color: var(--sage); }
+
+  .index-view { display: block; }
+  .index-view.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="wordmark" onclick="window.location.href='index.html'">Long Road To <em>Maybe</em></div>
+  <div class="nav-links">
+    <a href="long-road-to-maybe-blog.html">Blog</a>
+    <a href="long-road-to-maybe-research.html" class="active">Research</a>
+    <a href="long-road-to-maybe-stories.html">Stories</a>
+    <a href="long-road-to-maybe-resources.html">Resources</a>
+    <a href="long-road-to-maybe-community.html">Community</a>
+  </div>
+  <button class="nav-cta" onclick="window.location.href='long-road-to-maybe-community.html'">Join us</button>
+</nav>
+
+<!-- ══════════ INDEX VIEW ══════════ -->
+<div class="index-view" id="index-view">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow sage">Evidence, translated</p>
+        <h1>Medical research<br>made <em>human</em></h1>
+      </div>
+      <div class="hero-right">
+        <p>IVF research is published in journals written for clinicians, not patients. We read it, verify it, and translate it into plain English — so you can walk into your next appointment informed, and ask the questions that matter.</p>
+        <div class="hero-promise">
+          <strong>Our commitment to accuracy</strong>
+          Every article links to its source study. We never overstate findings or offer false hope. Where evidence is mixed or incomplete, we say so.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item"><strong>38</strong><span>Research articles</span></div>
+    <div class="stat-item"><strong>12</strong><span>Treatment explainers</span></div>
+    <div class="stat-item"><strong>60+</strong><span>Glossary terms</span></div>
+    <div class="stat-item"><strong>Monthly</strong><span>New additions</span></div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <div class="search-bar">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="search-input" placeholder="Search — try 'embryo grading', 'AMH', or 'frozen transfer'..." oninput="handleSearch(this)" />
+      <span class="search-clear" id="search-clear" onclick="clearSearch()">×</span>
+    </div>
+  </div>
+
+  <div class="rule"></div>
+
+  <!-- LAYOUT -->
+  <div class="research-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <p class="sidebar-label">Category</p>
+        <div class="sidebar-filters">
+          <button class="sidebar-btn active" onclick="filterArticles('all', this)">All research <span class="count">38</span></button>
+          <div class="sidebar-divider"></div>
+          <button class="sidebar-btn" onclick="filterArticles('clinical', this)">Clinical research <span class="count">14</span></button>
+          <button class="sidebar-btn" onclick="filterArticles('treatment', this)">Treatment explainers <span class="count">12</span></button>
+          <button class="sidebar-btn" onclick="filterArticles('medication', this)">Medications <span class="count">6</span></button>
+          <button class="sidebar-btn" onclick="filterArticles('wellbeing', this)">Wellbeing & lifestyle <span class="count">4</span></button>
+          <button class="sidebar-btn" onclick="filterArticles('study', this)">New studies <span class="count">2</span></button>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <p class="sidebar-label">Treatment stage</p>
+        <div class="sidebar-filters">
+          <button class="sidebar-btn" onclick="filterArticles('before', this)">Before treatment</button>
+          <button class="sidebar-btn" onclick="filterArticles('stimulation', this)">Stimulation phase</button>
+          <button class="sidebar-btn" onclick="filterArticles('transfer', this)">Transfer & implantation</button>
+          <button class="sidebar-btn" onclick="filterArticles('tww', this)">Two-week wait</button>
+          <button class="sidebar-btn" onclick="filterArticles('after', this)">After a result</button>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <p class="sidebar-label">Reading time</p>
+        <div class="sidebar-filters">
+          <button class="sidebar-btn" onclick="filterArticles('quick', this)">Quick reads (under 5 min)</button>
+          <button class="sidebar-btn" onclick="filterArticles('deep', this)">Deep dives (10+ min)</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+      <div class="main-header">
+        <h2 id="section-title">All research</h2>
+        <span class="result-count" id="result-count">Showing 8 articles</span>
+      </div>
+
+      <!-- PINNED -->
+      <div class="pinned-article" id="pinned-card">
+        <div>
+          <p class="pinned-badge">Most read this month</p>
+          <h3>Frozen vs fresh embryo transfer — what the current evidence actually favours</h3>
+          <p>The conversation has shifted significantly in the last three years. We look at what large-scale trials now say about outcomes, and whether your clinic's preference is evidence-based.</p>
+          <div class="pinned-meta">
+            <span class="meta-pill">🔬 Clinical research</span>
+            <span class="meta-pill">Transfer & implantation</span>
+            <span class="meta-pill">8 min read</span>
+          </div>
+        </div>
+        <button class="btn-read" onclick="showArticle('frozen')">Read article →</button>
+      </div>
+
+      <!-- ARTICLE LIST -->
+      <div class="article-list" id="article-list">
+
+        <div class="article-item" data-cat="clinical" data-stage="transfer" onclick="showArticle('embryo')">
+          <div>
+            <p class="article-category cat-clinical">Clinical research</p>
+            <h3 class="article-title">What the latest embryo grading research actually means for your cycle <span class="new-badge">New</span></h3>
+            <p class="article-excerpt">New ESHRE guidance simplifies grading standards across clinics. Here's what changed, what it means, and the questions to ask your team before your next transfer.</p>
+            <div class="article-meta"><span>Clinical research</span><span>Transfer & implantation</span><span>June 2025</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">5 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="wellbeing" data-stage="stimulation" onclick="showArticle('sleep')">
+          <div>
+            <p class="article-category cat-wellbeing">Wellbeing & lifestyle</p>
+            <h3 class="article-title">The link between sleep quality and IVF outcomes — what the studies say <span class="new-badge">New</span></h3>
+            <p class="article-excerpt">Three recent papers suggest sleep disruption in the stimulation phase may affect egg quality. Here's what the evidence actually shows — and what's still uncertain.</p>
+            <div class="article-meta"><span>Wellbeing</span><span>Stimulation phase</span><span>May 2025</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">6 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="treatment" data-stage="before" onclick="showArticle('amh')">
+          <div>
+            <p class="article-category cat-treatment">Treatment explainer</p>
+            <h3 class="article-title">AMH explained — what your result means and what it doesn't</h3>
+            <p class="article-excerpt">Anti-Müllerian Hormone is one of the most talked-about numbers in IVF. It's also one of the most misunderstood. Here's what it actually measures and why it isn't the whole picture.</p>
+            <div class="article-meta"><span>Treatment explainer</span><span>Before treatment</span><span>April 2025</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">7 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="medication" data-stage="stimulation" onclick="showArticle('trigger')">
+          <div>
+            <p class="article-category cat-medication">Medications</p>
+            <h3 class="article-title">The trigger shot — what it does, when it's given, and why timing matters so much</h3>
+            <p class="article-excerpt">The hCG or GnRH agonist trigger is one of the most precisely timed steps in an IVF cycle. Understanding why helps make sense of the urgency around it.</p>
+            <div class="article-meta"><span>Medication</span><span>Stimulation phase</span><span>March 2025</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">5 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="clinical" data-stage="tww" onclick="showArticle('progesterone')">
+          <div>
+            <p class="article-category cat-clinical">Clinical research</p>
+            <h3 class="article-title">Progesterone in the two-week wait — why your symptoms don't mean what you think</h3>
+            <p class="article-excerpt">Progesterone supplementation mimics early pregnancy symptoms almost exactly. This is why symptom-spotting during the TWW is genuinely unreliable — and what the research says instead.</p>
+            <div class="article-meta"><span>Clinical research</span><span>Two-week wait</span><span>February 2025</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">6 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="treatment" data-stage="transfer" onclick="showArticle('icsi')">
+          <div>
+            <p class="article-category cat-treatment">Treatment explainer</p>
+            <h3 class="article-title">IVF vs ICSI — understanding when one is recommended over the other</h3>
+            <p class="article-excerpt">ICSI is now used in the majority of IVF cycles in the UK, including many where it may not be strictly necessary. Here's what the evidence says about when it genuinely helps.</p>
+            <div class="article-meta"><span>Treatment explainer</span><span>Before treatment</span><span>January 2025</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">8 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="study" data-stage="transfer" onclick="showArticle('frozen')">
+          <div>
+            <p class="article-category cat-study">New study</p>
+            <h3 class="article-title">Large Nordic trial challenges assumptions about blastocyst vs cleavage stage transfer</h3>
+            <p class="article-excerpt">A 2024 randomised trial involving over 1,800 patients found more nuanced results than previously assumed. We break down what it means for clinical practice.</p>
+            <div class="article-meta"><span>New study</span><span>Transfer & implantation</span><span>December 2024</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">10 min read</p></div>
+        </div>
+
+        <div class="article-item" data-cat="wellbeing" data-stage="before" onclick="showArticle('sleep')">
+          <div>
+            <p class="article-category cat-wellbeing">Wellbeing & lifestyle</p>
+            <h3 class="article-title">What the evidence actually says about diet, supplements, and IVF outcomes</h3>
+            <p class="article-excerpt">There is a lot of advice about what to eat, take, and avoid during IVF. Some of it is evidence-based. A lot of it isn't. Here's an honest look at what the research supports.</p>
+            <div class="article-meta"><span>Wellbeing</span><span>Before treatment</span><span>November 2024</span></div>
+          </div>
+          <div class="article-right"><p class="article-read-time">9 min read</p></div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;padding-top:48px">
+        <button style="background:transparent;border:1px solid var(--surface);padding:13px 36px;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.06em;cursor:pointer;color:var(--text-secondary);transition:all 0.2s" onmouseover="this.style.borderColor='var(--sage)';this.style.color='var(--sage)'" onmouseout="this.style.borderColor='var(--surface)';this.style.color='var(--text-secondary)'">Load more articles</button>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div id="empty-state" style="display:none;text-align:center;padding:64px 0">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;margin-bottom:10px">No articles found</p>
+        <p style="font-size:14px;color:var(--text-secondary)">Try a different search, or <a href="#" style="color:var(--sage)" onclick="document.getElementById('suggest-section').scrollIntoView({behavior:'smooth'});return false">suggest a topic</a>.</p>
+      </div>
+    </main>
+  </div>
+
+</div>
+<!-- ══════════ END INDEX VIEW ══════════ -->
+
+
+<!-- ══════════ ARTICLE VIEW ══════════ -->
+<div class="article-view" id="article-view">
+  <button class="back-btn" onclick="showIndex()">← Back to Research</button>
+  <div id="article-content"></div>
+</div>
+<!-- ══════════ END ARTICLE VIEW ══════════ -->
+
+
+<!-- GLOSSARY -->
+<section class="glossary-section" id="glossary-section">
+  <div class="glossary-inner">
+    <div class="glossary-header">
+      <div>
+        <p class="eyebrow sage">Quick reference</p>
+        <h2>The IVF <em>glossary</em></h2>
+      </div>
+      <p>Every term, acronym, and abbreviation you'll encounter — explained plainly. Use the alphabet filter to find what you need, or download the full glossary from our Resources page.</p>
+    </div>
+    <div class="alpha-filter" id="alpha-filter">
+      <button class="alpha-btn active" onclick="filterGlossary('all', this)">All</button>
+      <button class="alpha-btn" onclick="filterGlossary('A', this)">A</button>
+      <button class="alpha-btn" onclick="filterGlossary('B', this)">B</button>
+      <button class="alpha-btn" onclick="filterGlossary('C', this)">C</button>
+      <button class="alpha-btn" onclick="filterGlossary('E', this)">E</button>
+      <button class="alpha-btn" onclick="filterGlossary('F', this)">F</button>
+      <button class="alpha-btn" onclick="filterGlossary('H', this)">H</button>
+      <button class="alpha-btn" onclick="filterGlossary('I', this)">I</button>
+      <button class="alpha-btn" onclick="filterGlossary('P', this)">P</button>
+      <button class="alpha-btn" onclick="filterGlossary('T', this)">T</button>
+    </div>
+    <div class="glossary-grid" id="glossary-grid">
+      <div class="glossary-card" data-letter="A"><p class="glossary-term">AMH</p><p class="glossary-abbr">Anti-Müllerian Hormone</p><p class="glossary-def">A blood test used to estimate ovarian reserve — how many eggs you have remaining. A lower result doesn't mean you can't conceive, but it informs your clinic's approach to stimulation.</p></div>
+      <div class="glossary-card" data-letter="A"><p class="glossary-term">AFC</p><p class="glossary-abbr">Antral Follicle Count</p><p class="glossary-def">An ultrasound count of small follicles visible on your ovaries at the start of your cycle. Used alongside AMH to predict your response to stimulation drugs.</p></div>
+      <div class="glossary-card" data-letter="B"><p class="glossary-term">Blastocyst</p><p class="glossary-abbr">Day 5–6 embryo</p><p class="glossary-def">An embryo that has developed for five or six days and reached the blastocyst stage. These are generally considered to have a higher chance of successful implantation than earlier-stage embryos.</p></div>
+      <div class="glossary-card" data-letter="E"><p class="glossary-term">Embryo grading</p><p class="glossary-abbr">Quality assessment</p><p class="glossary-def">A system used by embryologists to assess embryo quality. Grades vary by clinic and stage, but broadly reflect cell number, symmetry, and fragmentation. A lower grade doesn't mean an embryo won't work.</p></div>
+      <div class="glossary-card" data-letter="F"><p class="glossary-term">FET</p><p class="glossary-abbr">Frozen Embryo Transfer</p><p class="glossary-def">A cycle in which a previously frozen embryo is thawed and transferred to the uterus. Outcomes for FET cycles are now comparable or superior to fresh transfers in many studies.</p></div>
+      <div class="glossary-card" data-letter="H"><p class="glossary-term">hCG</p><p class="glossary-abbr">Human Chorionic Gonadotropin</p><p class="glossary-def">The hormone detected by pregnancy tests, also used as a trigger shot to mature eggs before collection. Its presence is what causes the classic early pregnancy symptoms.</p></div>
+      <div class="glossary-card" data-letter="I"><p class="glossary-term">ICSI</p><p class="glossary-abbr">Intracytoplasmic Sperm Injection</p><p class="glossary-def">A form of IVF in which a single sperm is injected directly into an egg, rather than sperm and egg being placed together. Most commonly recommended for male factor infertility.</p></div>
+      <div class="glossary-card" data-letter="P"><p class="glossary-term">PGT-A</p><p class="glossary-abbr">Preimplantation Genetic Testing</p><p class="glossary-def">Testing of embryos for chromosomal abnormalities before transfer. Evidence on its benefit for general IVF populations remains debated — it is more clearly indicated in specific circumstances.</p></div>
+      <div class="glossary-card" data-letter="P"><p class="glossary-term">Progesterone</p><p class="glossary-abbr">Luteal support hormone</p><p class="glossary-def">A hormone supplemented after egg collection and transfer to support the uterine lining. Progesterone causes symptoms (bloating, breast tenderness, fatigue) that closely mimic early pregnancy — making symptom-spotting unreliable during the TWW.</p></div>
+      <div class="glossary-card" data-letter="T"><p class="glossary-term">TWW</p><p class="glossary-abbr">Two-Week Wait</p><p class="glossary-def">The period between embryo transfer and the official pregnancy test date. Widely considered the most emotionally difficult part of an IVF cycle.</p></div>
+      <div class="glossary-card" data-letter="C"><p class="glossary-term">Chemical pregnancy</p><p class="glossary-abbr">Early pregnancy loss</p><p class="glossary-def">A very early pregnancy loss detected by a positive hCG test that does not progress to a clinical pregnancy. Often occurs before five weeks. The clinical term does not reflect the emotional weight of the experience for many people.</p></div>
+      <div class="glossary-card" data-letter="T"><p class="glossary-term">Trigger shot</p><p class="glossary-abbr">Final maturation injection</p><p class="glossary-def">An injection given approximately 36 hours before egg collection to trigger final maturation of follicles. Timing is precise — it is one of the most time-sensitive steps in an IVF cycle.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUGGEST A TOPIC -->
+<section id="suggest-section">
+  <div class="suggest-strip">
+    <div>
+      <h2>Have a research <em>question?</em></h2>
+      <p>If there's something you've been trying to understand — a term your clinic used, a study you read about, a treatment decision you're trying to make sense of — tell us. We write what the community needs to know.</p>
+    </div>
+    <div>
+      <div class="suggest-form" id="suggest-form">
+        <input type="text" id="suggest-input" placeholder="What would you like us to research?" />
+        <button onclick="submitSuggestion()">Suggest it</button>
+      </div>
+      <p style="font-size:11px;color:var(--text-secondary);margin-top:10px;letter-spacing:0.04em">We read every suggestion and publish a new article every month.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <p class="eyebrow sage">Stay informed</p>
+  <h2>New research, every month</h2>
+  <p>One email a month with new articles, translated studies, and something practical. No noise.</p>
+  <div class="nl-row">
+    <input type="email" placeholder="your@email.com" />
+    <button>Join us</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wordmark" onclick="window.location.href='index.html'" style="cursor:pointer">Long Road To <em>Maybe</em></div>
+  <p class="footer-note">Built with care, by someone who's been there.</p>
+  <div class="footer-links">
+    <a href="index.html">About</a>
+    <a href="index.html">Privacy</a>
+    <a href="index.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+  const articleContent = {
+    frozen: {
+      cat: 'Clinical research', catClass: 'cat-clinical',
+      title: "Frozen vs fresh embryo transfer — what the current evidence <em>actually</em> favours",
+      icon: '🔬', date: 'December 2024', readTime: '8 min read',
+      findings: [
+        'Frozen embryo transfers now show comparable or superior live birth rates in most patient populations',
+        'Fresh transfers carry a higher risk of ovarian hyperstimulation syndrome (OHSS) in high-responders',
+        'A freeze-all strategy may benefit patients with elevated progesterone on trigger day',
+        'Evidence is less clear-cut for normal responders — clinical judgement remains important'
+      ],
+      body: `<p>For the first decade of widespread IVF practice, fresh embryo transfer was the default. You stimulated, you collected, you fertilised, and you transferred — usually on day three or five of embryo development, while still in the same cycle.</p>
+      <p>That model has changed substantially. Frozen embryo transfer (FET) now accounts for the majority of transfers in many clinics, including most UK fertility centres. The question worth asking is: why, and what does the evidence actually say?</p>
+      <h2>What the large trials show</h2>
+      <p>Several large randomised controlled trials have now compared fresh and frozen transfer outcomes. The picture that emerges is nuanced — and worth understanding before assuming one approach is universally superior.</p>
+      <blockquote>"The evidence doesn't say frozen is always better. It says frozen is better in specific circumstances — and that in others, it makes little measurable difference."</blockquote>
+      <p>For women who produce a high number of eggs and are at risk of ovarian hyperstimulation syndrome (OHSS), a freeze-all strategy is clearly supported by evidence. Transferring in a subsequent, unstimulated cycle avoids the hormonal environment of a stimulation cycle, which appears to be less favourable for implantation in this group.</p>
+      <h2>Where the evidence is less clear</h2>
+      <p>For normal responders — women who produce a typical number of eggs without significant OHSS risk — the picture is less definitive. A major Nordic trial published in 2024 found no significant difference in live birth rates between fresh and frozen transfer in this population. Other studies have found small advantages for frozen, particularly around singleton birth rates and reduced obstetric complications.</p>
+      <h2>What to ask your clinic</h2>
+      <p>The honest answer is that the right approach depends on your individual response to stimulation, your progesterone level on trigger day, and your clinic's outcomes data for each approach. These are exactly the questions worth raising at your next appointment.</p>`,
+      clinicQuestions: [
+        'Based on my response to stimulation, would you recommend a fresh or frozen transfer — and why?',
+        'What was my progesterone level on trigger day, and does that affect your recommendation?',
+        'What are your clinic\'s live birth rates for fresh vs frozen transfer in my age group?',
+        'Are there any reasons in my specific case that would make one approach preferable?'
+      ],
+      source: 'Based on: Shi et al. (2018), New England Journal of Medicine; Stormlund et al. (2024), BMJ; ESHRE guidelines on ovarian stimulation (2023 update).',
+      tags: ['Embryo transfer', 'FET', 'Fresh transfer', 'Clinical research', 'OHSS']
+    },
+    embryo: {
+      cat: 'Clinical research', catClass: 'cat-clinical',
+      title: "What the latest embryo grading research <em>actually</em> means for your cycle",
+      icon: '🔬', date: 'June 2025', readTime: '5 min read',
+      findings: [
+        'ESHRE has published updated consensus guidance standardising embryo grading across clinics',
+        'The new system aims to make grades more consistent and comparable between centres',
+        'A lower grade does not mean an embryo cannot result in a healthy pregnancy',
+        'Grading reflects probability, not certainty — it is one factor among many'
+      ],
+      body: `<p>If you've been through an IVF cycle, you've probably heard your embryologist talk about grades. A 5AA. A 3BB. Letters and numbers that carry enormous emotional weight — but which many people have never had properly explained.</p>
+      <p>New guidance from ESHRE has simplified grading standards. Here's what changed and what it means for you.</p>
+      <h2>Why grading matters — and why it's always been complicated</h2>
+      <p>Embryo grading is a way for embryologists to assess the likelihood that an embryo will successfully implant. It looks at how the embryo has developed — its size, the quality of the inner cells, and the quality of the outer cell layer that will become the placenta.</p>
+      <blockquote>"A grade isn't a guarantee. A lower-graded embryo can still result in a healthy pregnancy. What grading gives us is a probability, not a certainty."</blockquote>
+      <p>The challenge has always been that different clinics have used different grading systems, making it difficult to compare results between centres. What counts as a good embryo at one clinic might be classified differently at another.</p>
+      <h2>What the new guidance changes</h2>
+      <p>ESHRE's updated consensus paper recommends standardising grading around a single, clearly defined scale. In practical terms, this means that clinics adopting the guidance will use the same language to describe the same thing — and your records will be more straightforwardly interpretable if you ever switch clinics.</p>`,
+      clinicQuestions: [
+        'Which grading system do you use, and has it changed recently?',
+        'How do you define the grade given to my embryo — what does it include?',
+        'What does this grade mean in practical terms for our transfer decision?',
+        'Do you have outcome data by embryo grade for patients with my profile?'
+      ],
+      source: 'Based on: ESHRE Special Interest Group of Embryology (2023). Revised guidelines on embryo assessment and grading.',
+      tags: ['Embryo grading', 'ESHRE', 'Transfer', 'Clinical research']
+    },
+    sleep: {
+      cat: 'Wellbeing & lifestyle', catClass: 'cat-wellbeing',
+      title: "The link between sleep quality and IVF outcomes — what the studies <em>say</em>",
+      icon: '🌙', date: 'May 2025', readTime: '6 min read',
+      findings: [
+        'Several observational studies suggest poor sleep during stimulation may be associated with lower egg yield',
+        'The evidence is preliminary — no large randomised trials exist yet',
+        'Sleep disruption affects cortisol and melatonin, both of which have roles in reproductive function',
+        'Clinically meaningful impact likely requires significant, sustained sleep disruption — not an occasional bad night'
+      ],
+      body: `<p>Three papers published in the last eighteen months have drawn attention to a potential relationship between sleep quality and IVF outcomes. Here's an honest look at what they found — and what they didn't.</p>
+      <h2>What the research found</h2>
+      <p>The studies, all observational in design, found associations between poor sleep quality during the stimulation phase and lower egg yields and, in some cases, lower rates of fertilisation. The researchers proposed that disrupted sleep affects melatonin production, which has a known role in protecting eggs from oxidative stress during development.</p>
+      <blockquote>"Association is not causation. The women in these studies who slept poorly may also have been more anxious, which itself has independent effects on reproductive hormones."</blockquote>
+      <h2>What this doesn't mean</h2>
+      <p>It does not mean that a few nights of poor sleep during your cycle will meaningfully affect your outcome. It does not mean you should add sleep anxiety to everything else you're already managing. The studies involved significant, sustained sleep disruption — not the kind of restless nights most people experience during IVF.</p>
+      <h2>A reasonable takeaway</h2>
+      <p>If you're already struggling with sleep during treatment, it's worth mentioning to your clinic — not because one bad night matters, but because chronic sleep disruption is worth addressing for your overall wellbeing, separate from IVF outcomes entirely.</p>`,
+      clinicQuestions: [
+        'Is there anything you recommend to support sleep during the stimulation phase?',
+        'Are there any supplements or approaches you\'d suggest — or advise against?',
+        'Should I mention it if I\'m experiencing significant sleep disruption?'
+      ],
+      source: 'Based on: Wesselink et al. (2023), Human Reproduction; Park et al. (2024), Journal of Assisted Reproduction and Genetics.',
+      tags: ['Sleep', 'Wellbeing', 'Stimulation', 'Lifestyle', 'Egg quality']
+    },
+    amh: {
+      cat: 'Treatment explainer', catClass: 'cat-treatment',
+      title: "AMH explained — what your result means and what it <em>doesn't</em>",
+      icon: '📋', date: 'April 2025', readTime: '7 min read',
+      findings: [
+        'AMH measures ovarian reserve — the quantity of eggs remaining, not their quality',
+        'A low AMH does not mean IVF cannot work — it affects approach, not outcome certainty',
+        'AMH levels naturally decline with age but can vary significantly between individuals',
+        'AMH is one factor — AFC, age, and other markers together give a fuller picture'
+      ],
+      body: `<p>AMH is one of the first blood tests most people have when beginning the IVF process. It's also one of the results that causes the most anxiety — because it arrives as a number without context, and clinics don't always have time to explain what it means.</p>
+      <h2>What AMH actually measures</h2>
+      <p>Anti-Müllerian Hormone is produced by follicles in the ovaries. The more follicles you have, the higher your AMH tends to be. It is therefore used as a proxy for ovarian reserve — essentially, an estimate of how many eggs you have remaining.</p>
+      <blockquote>"AMH tells your clinic something about quantity. It tells you nothing about quality. And quality is what determines whether an egg becomes a healthy embryo."</blockquote>
+      <h2>What a low AMH does and doesn't mean</h2>
+      <p>A low AMH result means your clinic may expect a lower response to stimulation drugs — fewer eggs collected per cycle. It does not mean those eggs are of poor quality. It does not mean IVF won't work. It means the approach to your treatment will be tailored accordingly, and that your clinic may recommend a higher dose of stimulation medication or discuss the implications for how many cycles you may need.</p>
+      <h2>Why AMH alone isn't the whole story</h2>
+      <p>Clinics use AMH alongside the antral follicle count (AFC) — an ultrasound count of visible follicles — and your age, to build a fuller picture of how you're likely to respond. These factors together are far more meaningful than any single number in isolation.</p>`,
+      clinicQuestions: [
+        'What does my AMH result mean specifically for my treatment plan?',
+        'How does my AMH interact with my AFC and age in terms of predicted response?',
+        'Does a low AMH change what protocol or dose you\'d recommend?',
+        'What outcomes have you seen in patients with similar AMH levels to mine?'
+      ],
+      source: 'Based on: NICE Fertility guidelines (2023); La Marca et al., Human Reproduction Update.',
+      tags: ['AMH', 'Ovarian reserve', 'AFC', 'Before treatment', 'Test results']
+    },
+    trigger: {
+      cat: 'Medications', catClass: 'cat-medication',
+      title: "The trigger shot — what it does, when it's given, and why timing matters <em>so much</em>",
+      icon: '💉', date: 'March 2025', readTime: '5 min read',
+      findings: [
+        'The trigger shot causes final maturation of eggs and is given approximately 36 hours before collection',
+        'Timing is among the most precise steps in an IVF cycle — even a few hours matters',
+        'Two main types are used: hCG and GnRH agonist triggers — each with different indications',
+        'High responders may be offered a GnRH agonist trigger to reduce OHSS risk'
+      ],
+      body: `<p>If you've reached the trigger shot stage, you know how much significance it carries. The precise timing, the instruction to administer it at a specific hour, the awareness that egg collection is now scheduled and counting down.</p>
+      <p>Here's what's actually happening — and why the timing is so carefully controlled.</p>
+      <h2>What the trigger shot does</h2>
+      <p>Throughout the stimulation phase, your follicles have been growing but your eggs have not yet completed their maturation process. The trigger shot — usually an injection of hCG or a GnRH agonist — initiates that final stage of maturation, preparing the eggs for collection.</p>
+      <blockquote>"Collection is timed for approximately 36 hours after the trigger — after maturation is complete but before the body would naturally ovulate and release the eggs."</blockquote>
+      <h2>Why the timing is so precise</h2>
+      <p>If collection happens too early, the eggs won't be fully mature. If it happens too late, ovulation may have already occurred and the eggs may be lost. The 36-hour window is well-established in the research, and your clinic will schedule collection with this in mind — which is why your trigger time is given to the hour.</p>
+      <h2>hCG vs GnRH agonist triggers</h2>
+      <p>For most patients, a standard hCG trigger is used. For patients at higher risk of OHSS — typically those who've produced a large number of follicles — a GnRH agonist trigger may be offered instead. This carries a lower OHSS risk but requires a frozen transfer cycle, as it affects the uterine lining.</p>`,
+      clinicQuestions: [
+        'Which type of trigger will I be given, and why?',
+        'What should I do if I\'m late administering the trigger — who do I call?',
+        'Does my response to stimulation affect which trigger type you\'d recommend?',
+        'What signs of OHSS should I watch for after the trigger?'
+      ],
+      source: 'Based on: ESHRE guidelines on ovarian stimulation (2023); Youssef et al., Cochrane Database of Systematic Reviews.',
+      tags: ['Trigger shot', 'hCG', 'GnRH agonist', 'Egg collection', 'Medications', 'OHSS']
+    },
+    progesterone: {
+      cat: 'Clinical research', catClass: 'cat-clinical',
+      title: "Progesterone in the two-week wait — why your symptoms don't mean what you <em>think</em>",
+      icon: '🔬', date: 'February 2025', readTime: '6 min read',
+      findings: [
+        'Progesterone supplementation causes symptoms almost identical to early pregnancy symptoms',
+        'Symptoms during the TWW cannot be used to predict whether implantation has occurred',
+        'Both the presence and absence of symptoms are unreliable indicators',
+        'The only reliable way to determine outcome is an hCG blood or urine test'
+      ],
+      body: `<p>One of the hardest things about the two-week wait is the symptom-spotting. Every sensation becomes data. Every twinge is analysed. The problem is that the progesterone supplements almost everyone takes after transfer cause symptoms that are almost indistinguishable from early pregnancy — which makes symptom-spotting not just unhelpful, but actively misleading.</p>
+      <h2>What progesterone does in the body</h2>
+      <p>Progesterone is supplemented after egg collection and transfer to support the uterine lining and maintain an environment in which implantation can occur. It is a necessary part of almost every IVF cycle.</p>
+      <blockquote>"The symptoms caused by progesterone — bloating, breast tenderness, fatigue, nausea — are the same symptoms caused by early pregnancy. There is no way to distinguish between them from the outside."</blockquote>
+      <h2>Why this matters for the TWW</h2>
+      <p>Because progesterone is already present in high doses, your body is already experiencing its effects — regardless of whether an embryo has implanted. This means that experiencing symptoms does not indicate a positive outcome. And the absence of symptoms does not indicate a negative one. The symptoms are caused by the medication, not by pregnancy.</p>
+      <h2>The only reliable indicator</h2>
+      <p>An hCG test — blood or urine — is the only way to know. Everything else, including symptoms, spotting, and how you feel, is noise created by the progesterone. This is not comforting information, but it is accurate — and accurate information during the TWW is genuinely useful, even when it's hard.</p>`,
+      clinicQuestions: [
+        'When is my official test date, and why is it set at that point?',
+        'If I test early and get a faint line, what should I do?',
+        'What do I do if I have spotting — is it always significant?',
+        'Should I continue progesterone until I get my official result?'
+      ],
+      source: 'Based on: van der Linden et al., Cochrane Database of Systematic Reviews; NICE Fertility guidelines (2023).',
+      tags: ['Progesterone', 'Two-week wait', 'TWW', 'Symptoms', 'Implantation']
+    },
+    icsi: {
+      cat: 'Treatment explainer', catClass: 'cat-treatment',
+      title: "IVF vs ICSI — understanding when one is recommended over the <em>other</em>",
+      icon: '📋', date: 'January 2025', readTime: '8 min read',
+      findings: [
+        'ICSI involves injecting a single sperm directly into each egg, rather than allowing natural fertilisation',
+        'ICSI is clearly indicated for male factor infertility and in specific clinical circumstances',
+        'For couples without male factor, evidence does not consistently show ICSI improves outcomes over standard IVF',
+        'ICSI is now used in over 60% of UK IVF cycles, including many where its benefit is unproven'
+      ],
+      body: `<p>ICSI — intracytoplasmic sperm injection — is now the most commonly used fertilisation method in UK IVF cycles. If your clinic has recommended it, or if you're wondering whether to ask about it, here's what the evidence actually says.</p>
+      <h2>What ICSI involves</h2>
+      <p>In standard IVF, eggs and a prepared sample of sperm are placed together in a dish, and fertilisation occurs naturally. In ICSI, an embryologist selects a single sperm and injects it directly into each egg using a fine needle. The rest of the process is identical.</p>
+      <h2>When ICSI is clearly indicated</h2>
+      <p>ICSI was originally developed for male factor infertility — where sperm count, motility, or morphology makes natural fertilisation unlikely. In this context, the evidence for its effectiveness is strong and well-established.</p>
+      <blockquote>"ICSI is one of the most significant advances in fertility treatment. It is also one of the most overused — routinely offered in circumstances where its benefit over standard IVF has not been demonstrated."</blockquote>
+      <h2>Where the evidence is less clear</h2>
+      <p>For couples without identified male factor infertility, multiple systematic reviews have found no consistent improvement in live birth rates with ICSI over standard IVF. Despite this, ICSI use has expanded significantly — partly for practical reasons (it gives embryologists more control over fertilisation) and partly because clinics vary in their interpretation of the evidence.</p>
+      <h2>Questions worth asking</h2>
+      <p>If ICSI has been recommended without a specific clinical reason being given, it's reasonable to ask what the rationale is. It is not a harmful procedure, but it does add cost — and understanding why your clinic recommends it helps you make an informed decision.</p>`,
+      clinicQuestions: [
+        'Why are you recommending ICSI for our situation specifically?',
+        'Do we have a male factor diagnosis that makes ICSI clearly indicated?',
+        'What are your fertilisation rates with standard IVF vs ICSI for couples with our profile?',
+        'Is there additional cost, and is the evidence sufficient to justify it in our case?'
+      ],
+      source: 'Based on: Bhattacharya et al., Cochrane Database; HFEA data reports; ESHRE guidelines on ICSI indications (2023).',
+      tags: ['ICSI', 'IVF', 'Fertilisation', 'Male factor', 'Treatment decision']
+    }
+  };
+
+  // ── SHOW/HIDE ARTICLE ──
+  function showArticle(id) {
+    const a = articleContent[id];
+    if (!a) return;
+    const findingsHtml = a.findings.map(f => `<div class="finding-item">${f}</div>`).join('');
+    const questionsHtml = a.clinicQuestions.map(q => `<div class="clinic-q">${q}</div>`).join('');
+    document.getElementById('article-content').innerHTML = `
+      <div class="article-header">
+        <p class="article-category ${a.catClass}">${a.cat}</p>
+        <h1>${a.title}</h1>
+        <div class="article-byline">
+          <div class="byline-icon">${a.icon}</div>
+          <div class="byline-text">
+            <strong>Long Road To Maybe Research Team</strong>
+            <span>${a.date} &nbsp;·&nbsp; ${a.readTime}</span>
+          </div>
+        </div>
+      </div>
+      <div class="key-findings">
+        <p class="key-findings-title">Key findings at a glance</p>
+        <div class="finding-list">${findingsHtml}</div>
+      </div>
+      <div class="article-body">${a.body}</div>
+      <div class="ask-clinic-box">
+        <p class="ask-clinic-title">Questions to ask your clinic</p>
+        <div class="clinic-questions">${questionsHtml}</div>
+      </div>
+      <div class="plain-english-box">
+        <p class="plain-english-title">Plain English summary</p>
+        <p>Every article on this page links to its source study. We aim to represent findings accurately and without overstatement. Where evidence is mixed or uncertain, we say so.</p>
+      </div>
+      <div class="article-source"><strong>Sources</strong>${a.source}</div>
+      <div class="article-tags">${a.tags.map(t => `<span class="tag-pill">${t}</span>`).join('')}</div>
+      <div class="article-share" style="margin-top:32px">
+        <p>Share this article</p>
+        <div class="share-btns">
+          <button class="share-btn" onclick="this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)">Copy link</button>
+          <button class="share-btn">Share via email</button>
+        </div>
+      </div>`;
+    document.getElementById('index-view').classList.add('hidden');
+    document.getElementById('article-view').classList.add('visible');
+    document.getElementById('glossary-section').style.display = 'none';
+    document.getElementById('suggest-section').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showIndex() {
+    document.getElementById('article-view').classList.remove('visible');
+    document.getElementById('index-view').classList.remove('hidden');
+    document.getElementById('glossary-section').style.display = '';
+    document.getElementById('suggest-section').style.display = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── FILTER ──
+  function filterArticles(cat, btn) {
+    document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const items = document.querySelectorAll('.article-item');
+    let visible = 0;
+    items.forEach(item => {
+      const show = cat === 'all' || item.dataset.cat === cat || item.dataset.stage === cat ||
+        (cat === 'quick' && item.querySelector('.article-read-time') && parseInt(item.querySelector('.article-read-time').textContent) < 6) ||
+        (cat === 'deep' && item.querySelector('.article-read-time') && parseInt(item.querySelector('.article-read-time').textContent) >= 8);
+      item.style.display = show ? 'grid' : 'none';
+      if (show) visible++;
+    });
+    const pinned = document.getElementById('pinned-card');
+    pinned.style.display = (cat === 'all' || cat === 'clinical' || cat === 'transfer') ? 'grid' : 'none';
+    if (cat === 'all' || cat === 'clinical' || cat === 'transfer') visible++;
+    document.getElementById('result-count').textContent = `Showing ${visible} article${visible !== 1 ? 's' : ''}`;
+    document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+    const labels = { all:'All research', clinical:'Clinical research', treatment:'Treatment explainers', medication:'Medications', wellbeing:'Wellbeing & lifestyle', study:'New studies', before:'Before treatment', stimulation:'Stimulation phase', transfer:'Transfer & implantation', tww:'Two-week wait', after:'After a result', quick:'Quick reads', deep:'Deep dives' };
+    document.getElementById('section-title').textContent = labels[cat] || 'Research';
+  }
+
+  // ── SEARCH ──
+  function handleSearch(input) {
+    const val = input.value.toLowerCase().trim();
+    document.getElementById('search-clear').style.display = val ? 'block' : 'none';
+    const items = document.querySelectorAll('.article-item');
+    let visible = 0;
+    items.forEach(item => {
+      const show = !val || item.textContent.toLowerCase().includes(val);
+      item.style.display = show ? 'grid' : 'none';
+      if (show) visible++;
+    });
+    const pinned = document.getElementById('pinned-card');
+    const pinnedShow = !val || pinned.textContent.toLowerCase().includes(val);
+    pinned.style.display = pinnedShow ? 'grid' : 'none';
+    if (pinnedShow) visible++;
+    document.getElementById('result-count').textContent = val ? `${visible} result${visible !== 1 ? 's' : ''} for "${val}"` : `Showing ${visible} articles`;
+    document.getElementById('empty-state').style.display = visible === 0 ? 'block' : 'none';
+    document.getElementById('section-title').textContent = val ? 'Search results' : 'All research';
+  }
+
+  function clearSearch() {
+    const input = document.getElementById('search-input');
+    input.value = '';
+    document.getElementById('search-clear').style.display = 'none';
+    handleSearch(input);
+  }
+
+  // ── GLOSSARY ──
+  function filterGlossary(letter, btn) {
+    document.querySelectorAll('.alpha-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.glossary-card').forEach(card => {
+      card.style.display = (letter === 'all' || card.dataset.letter === letter) ? 'block' : 'none';
+    });
+  }
+
+  // ── SUGGEST ──
+  function submitSuggestion() {
+    const input = document.getElementById('suggest-input');
+    if (input.value.trim().length > 3) {
+      document.getElementById('suggest-form').innerHTML = `<p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--sage)">Thank you — we'll research that. ✦</p>`;
+    } else {
+      input.style.borderColor = 'var(--sage)';
+      input.placeholder = 'Please describe what you\'d like us to cover...';
+    }
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.activeElement.id === 'suggest-input') submitSuggestion();
+    if (e.key === 'Enter' && document.activeElement.id === 'search-input') {}
+  });
+</script>
+</body>
+</html>
